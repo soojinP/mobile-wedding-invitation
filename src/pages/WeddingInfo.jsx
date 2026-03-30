@@ -34,7 +34,7 @@ export default function WeddingInfo({ onNext }) {
             <span className="family-dot"> / </span>
             <span className="family-relation">어머니</span> OOO
           </p>
-          <p className="family-child">차남 <strong>창민</strong></p>
+          <p className="family-child">장남 <strong>창민</strong></p>
         </div>
         <div className="family-row">
           <p className="family-side">신부측</p>
@@ -43,7 +43,7 @@ export default function WeddingInfo({ onNext }) {
             <span className="family-dot"> / </span>
             <span className="family-relation">어머니</span> OOO
           </p>
-          <p className="family-child">장녀 <strong>수진</strong></p>
+          <p className="family-child">차녀 <strong>수진</strong></p>
         </div>
       </div>
 

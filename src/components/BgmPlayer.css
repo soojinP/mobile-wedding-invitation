@@ -1,0 +1,30 @@
+.bgm-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(250, 249, 246, 0.9);
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  color: var(--text-light);
+}
+
+.bgm-btn.playing {
+  color: var(--accent-dark);
+  border-color: var(--accent);
+  animation: pulse-music 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-music {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}

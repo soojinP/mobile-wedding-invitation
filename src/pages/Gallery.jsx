@@ -1,8 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Gallery.css'
 
-// 사진 파일들을 public/photos/ 에 넣으세요
-// 예: photo1.jpg, photo2.jpg, ...
 const PHOTOS = [
   { src: '/photos/photo1.jpg', caption: '' },
   { src: '/photos/photo2.jpg', caption: '' },
@@ -12,58 +10,108 @@ const PHOTOS = [
   { src: '/photos/photo6.jpg', caption: '' },
 ]
 
+const TITLE_CARDS = [
+  '제1막',
+  '두 사람의 이야기가\n시작되었으니...',
+  '제2막',
+  '사랑이 무르익고...',
+  '제3막',
+  '드디어, 해피엔딩.',
+]
+
 export default function Gallery({ onNext }) {
-  const [selected, setSelected] = useState(null)
+  const [playing, setPlaying] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [showTitleCard, setShowTitleCard] = useState(false)
+
+  // 슬라이드쇼: 타이틀카드 → 사진 → 타이틀카드 → 사진 ...
+  const totalSlides = PHOTOS.length + TITLE_CARDS.length
+  const isTitle = currentSlide % 2 === 0
+  const titleIdx = Math.floor(currentSlide / 2)
+  const photoIdx = Math.floor(currentSlide / 2)
+
+  useEffect(() => {
+    if (!playing) return
+    const duration = isTitle ? 2500 : 3500
+    const timer = setTimeout(() => {
+      if (currentSlide >= totalSlides - 1) {
+        setPlaying(false)
+        return
+      }
+      setCurrentSlide((s) => s + 1)
+    }, duration)
+    return () => clearTimeout(timer)
+  }, [playing, currentSlide, isTitle, totalSlides])
+
+  const startFilm = () => {
+    setCurrentSlide(0)
+    setPlaying(true)
+  }
 
   return (
     <div className="page gallery-page">
-      <h2>우리의 이야기</h2>
-      <p className="gallery-sub">웨딩 사진</p>
-
-      <div className="gallery-grid fade-in-delay">
-        {PHOTOS.map((photo, i) => (
-          <div
-            key={i}
-            className="gallery-item"
-            onClick={() => setSelected(i)}
-          >
-            <div className="gallery-placeholder">
-              <span>{i + 1}</span>
-              <p>사진을 넣어주세요</p>
+      {!playing ? (
+        currentSlide === 0 ? (
+          // 시작 전
+          <div className="film-intro fade-in">
+            <div className="film-border-top" />
+            <h2 className="film-main-title">Our Wedding Film</h2>
+            <p className="film-subtitle">A Silent Picture in Moving Frames</p>
+            <div className="film-reel">
+              <span className="reel-icon">[ ◎ ]</span>
             </div>
+            <button className="btn btn-solid film-play-btn" onClick={startFilm}>
+              상영 시작
+            </button>
+            <p className="film-hint">* 사진을 무성영화처럼 감상하실 수 있습니다</p>
+            <div className="film-border-bottom" />
           </div>
-        ))}
-      </div>
+        ) : (
+          // 끝난 후
+          <div className="film-end fade-in">
+            <div className="film-border-top" />
+            <h2 className="film-end-title">- Fin -</h2>
+            <p className="film-end-sub">...그리고 이야기는 계속됩니다.</p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 32 }}>
+              <button className="btn" onClick={startFilm}>
+                다시 보기
+              </button>
+              <button className="btn btn-solid" onClick={onNext}>
+                결혼식 정보
+              </button>
+            </div>
+            <div className="film-border-bottom" />
+          </div>
+        )
+      ) : (
+        // 상영 중
+        <div className="film-screen">
+          <div className="film-grain" />
+          <div className="film-vignette" />
+          <div className="film-scratches" />
+          <div className="film-strip-left" />
+          <div className="film-strip-right" />
 
-      {selected !== null && (
-        <div className="lightbox" onClick={() => setSelected(null)}>
-          <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
-            <div className="lightbox-placeholder">
-              <span>Photo {selected + 1}</span>
+          {isTitle ? (
+            <div key={`title-${titleIdx}`} className="title-card film-fade">
+              <div className="title-card-inner">
+                <p>{TITLE_CARDS[titleIdx]}</p>
+              </div>
             </div>
-            {PHOTOS[selected].caption && (
-              <p className="lightbox-caption">{PHOTOS[selected].caption}</p>
-            )}
-            <div className="lightbox-nav">
-              <button
-                onClick={() => setSelected(selected > 0 ? selected - 1 : PHOTOS.length - 1)}
-              >
-                이전
-              </button>
-              <button onClick={() => setSelected(null)}>닫기</button>
-              <button
-                onClick={() => setSelected(selected < PHOTOS.length - 1 ? selected + 1 : 0)}
-              >
-                다음
-              </button>
+          ) : (
+            <div key={`photo-${photoIdx}`} className="film-photo film-fade">
+              <div className="film-photo-placeholder">
+                <span>{photoIdx + 1}</span>
+                <p>사진을 넣어주세요</p>
+              </div>
             </div>
+          )}
+
+          <div className="film-counter">
+            {photoIdx + (isTitle ? 0 : 1)} / {PHOTOS.length}
           </div>
         </div>
       )}
-
-      <button className="btn fade-in-delay-2" onClick={onNext} style={{ marginTop: 40 }}>
-        결혼식 정보 보기
-      </button>
     </div>
   )
 }

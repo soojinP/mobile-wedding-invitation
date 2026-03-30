@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Cover from './pages/Cover'
-import Saju from './pages/Saju'
+import Compatibility from './pages/Compatibility'
 import NameCompat from './pages/NameCompat'
 import Gallery from './pages/Gallery'
 import WeddingInfo from './pages/WeddingInfo'
@@ -8,11 +8,12 @@ import VenueMap from './pages/VenueMap'
 import Shuttle from './pages/Shuttle'
 import GiftMoney from './pages/GiftMoney'
 import Navigation from './components/Navigation'
+import BgmPlayer from './components/BgmPlayer'
 import './styles/global.css'
 
 const PAGES = [
   { id: 'cover', component: Cover },
-  { id: 'saju', component: Saju },
+  { id: 'compat', component: Compatibility },
   { id: 'name', component: NameCompat },
   { id: 'gallery', component: Gallery },
   { id: 'info', component: WeddingInfo },
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <div className="app">
+      <BgmPlayer />
       <PageComponent onNext={goNext} onPrev={goPrev} />
       <Navigation
         current={currentPage}

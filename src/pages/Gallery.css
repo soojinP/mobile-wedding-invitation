@@ -1,116 +1,330 @@
 .gallery-page {
-  padding-top: 40px;
-  padding-bottom: 100px;
-  min-height: auto;
-}
-
-.gallery-sub {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-bottom: 24px;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  width: 100%;
-}
-
-.gallery-item {
-  aspect-ratio: 3 / 4;
+  padding: 0;
+  min-height: 100dvh;
+  background: #1a1a1a;
+  position: relative;
   overflow: hidden;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  transition: transform 0.2s;
 }
 
-.gallery-item:hover {
-  transform: scale(0.98);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.gallery-placeholder {
-  width: 100%;
-  height: 100%;
-  background: #f0ede6;
+/* Film Intro */
+.film-intro,
+.film-end {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-light);
+  min-height: 100dvh;
+  padding: 60px 24px;
+  background: #1a1a1a;
+  color: #d4c5a0;
+  position: relative;
 }
 
-.gallery-placeholder span {
+.film-border-top,
+.film-border-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: repeating-linear-gradient(
+    90deg,
+    #2a2a2a 0px,
+    #2a2a2a 20px,
+    #1a1a1a 20px,
+    #1a1a1a 24px
+  );
+}
+
+.film-border-top { top: 0; }
+.film-border-bottom { bottom: 0; }
+
+.film-main-title {
+  font-family: 'Georgia', var(--serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #d4c5a0;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.film-subtitle {
+  font-size: 0.8rem;
+  color: #8a8060;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.film-reel {
+  margin: 32px 0;
+}
+
+.reel-icon {
   font-size: 2rem;
-  font-weight: 300;
-  color: var(--border);
+  color: #555;
+  letter-spacing: 0.2em;
 }
 
-.gallery-placeholder p {
+.film-play-btn {
+  background: #d4c5a0 !important;
+  color: #1a1a1a !important;
+  border-color: #d4c5a0 !important;
+}
+
+.film-play-btn:hover {
+  background: #bfb08a !important;
+}
+
+.film-hint {
   font-size: 0.7rem;
-  margin-top: 4px;
+  color: #555;
+  margin-top: 16px;
 }
 
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 200;
+/* Film End */
+.film-end-title {
+  font-family: 'Georgia', var(--serif);
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #d4c5a0;
+  font-style: italic;
+}
+
+.film-end-sub {
+  font-size: 0.9rem;
+  color: #8a8060;
+  margin-top: 12px;
+}
+
+.film-end .btn {
+  border-color: #d4c5a0;
+  color: #d4c5a0;
+}
+
+.film-end .btn:hover {
+  background: #d4c5a0;
+  color: #1a1a1a;
+}
+
+.film-end .btn-solid {
+  background: #d4c5a0;
+  color: #1a1a1a;
+}
+
+/* Film Screen */
+.film-screen {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  background: #1a1a1a;
+  overflow: hidden;
 }
 
-.lightbox-inner {
-  max-width: 480px;
+/* Film grain overlay */
+.film-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  animation: grain 0.3s steps(3) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2px, 1px); }
+  66% { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Vignette */
+.film-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+}
+
+/* Film scratches */
+.film-scratches {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.film-scratches::before,
+.film-scratches::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: rgba(255,255,255,0.1);
+  animation: scratch 0.8s linear infinite;
+}
+
+.film-scratches::before {
+  left: 30%;
+  animation-delay: 0.2s;
+}
+
+.film-scratches::after {
+  left: 70%;
+  animation-delay: 0.5s;
+}
+
+@keyframes scratch {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+/* Film strip borders */
+.film-strip-left,
+.film-strip-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 13;
+  background: #111;
+  pointer-events: none;
+}
+
+.film-strip-left { left: 0; }
+.film-strip-right { right: 0; }
+
+.film-strip-left::after,
+.film-strip-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 8px,
+    #222 8px,
+    #222 12px,
+    transparent 12px,
+    transparent 24px
+  );
+}
+
+/* Title card (무성영화 자막) */
+.title-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 60px 50px;
+  z-index: 5;
+}
+
+.title-card-inner {
+  border: 2px solid #d4c5a0;
+  padding: 40px 32px;
+  max-width: 320px;
   width: 100%;
 }
 
-.lightbox-inner img {
+.title-card-inner p {
+  font-family: 'Georgia', var(--serif);
+  font-size: 1.3rem;
+  color: #d4c5a0;
+  line-height: 1.8;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* Photo slide */
+.film-photo {
   width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  z-index: 5;
+  filter: sepia(0.6) contrast(1.1) brightness(0.9);
+}
+
+.film-photo-placeholder {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  background: #2a2a2a;
+  border: 3px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+
+.film-photo-placeholder span {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #444;
+}
+
+.film-photo-placeholder p {
+  font-size: 0.75rem;
+  color: #444;
+  margin-top: 8px;
+}
+
+.film-photo img {
+  width: 100%;
+  max-width: 360px;
   max-height: 70vh;
   object-fit: contain;
 }
 
-.lightbox-placeholder {
-  width: 100%;
-  height: 50vh;
-  background: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-size: 1.2rem;
+/* Fade transition */
+@keyframes filmFadeIn {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 1; }
 }
 
-.lightbox-caption {
-  color: #fff;
-  font-size: 0.85rem;
-  text-align: center;
-  margin-top: 12px;
+.film-fade {
+  animation: filmFadeIn 1s ease forwards;
 }
 
-.lightbox-nav {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 20px;
+/* Flicker effect */
+.film-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 14;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
 }
 
-.lightbox-nav button {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 8px 20px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-family: var(--sans);
+@keyframes flicker {
+  0% { background: rgba(255,255,255,0); }
+  50% { background: rgba(255,255,255,0.02); }
+  100% { background: rgba(255,255,255,0); }
+}
+
+/* Counter */
+.film-counter {
+  position: absolute;
+  bottom: 90px;
+  right: 40px;
+  font-size: 0.7rem;
+  color: #555;
+  z-index: 15;
+  font-variant-numeric: tabular-nums;
 }
