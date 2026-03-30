@@ -1,0 +1,162 @@
+.saju-page {
+  padding-top: 40px;
+  padding-bottom: 100px;
+  min-height: auto;
+}
+
+.saju-disclaimer {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+
+.loading-section {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.loading-msg {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin: 12px 0;
+}
+
+.progress-bar {
+  width: 80%;
+  max-width: 240px;
+  height: 4px;
+  background: var(--border);
+  margin: 12px auto;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.1s linear;
+  border-radius: 2px;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.saju-card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 28px 20px;
+  margin-top: 20px;
+}
+
+.saju-card h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.saju-birth {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.saju-birth-note {
+  font-size: 0.75rem;
+  color: var(--accent-dark);
+  margin-top: 4px;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.pillar-label {
+  font-size: 0.7rem;
+  color: var(--text-light);
+}
+
+.pillar-hanja {
+  font-size: 1.3rem;
+  font-family: var(--serif);
+  font-weight: 700;
+}
+
+.pillar-reading {
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.pillar-element {
+  font-size: 0.7rem;
+  color: var(--accent-dark);
+}
+
+.saju-summary {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  text-align: left;
+  margin-top: 12px;
+}
+
+.compat-result {
+  width: 100%;
+  background: #fff;
+  border: 2px solid var(--accent);
+  padding: 32px 20px;
+  margin-top: 24px;
+}
+
+.compat-score {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.compat-score span {
+  font-size: 1.2rem;
+}
+
+.compat-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  margin-top: 4px;
+  color: var(--red);
+}
+
+.compat-details {
+  list-style: none;
+  text-align: left;
+  margin-top: 16px;
+}
+
+.compat-details li {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.compat-details li:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  color: var(--accent-dark);
+}

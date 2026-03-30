@@ -1,0 +1,115 @@
+.venue-page {
+  padding-top: 40px;
+  padding-bottom: 100px;
+  min-height: auto;
+}
+
+.venue-card {
+  width: 100%;
+  padding: 24px 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.venue-card h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.venue-address {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 200px;
+  background: #e8e5de;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  color: var(--text-light);
+}
+
+.map-placeholder p {
+  font-size: 0.85rem;
+}
+
+.map-note {
+  font-size: 0.75rem !important;
+  margin-top: 8px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.map-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.map-btn {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 12px 0;
+}
+
+.naver-btn {
+  border-color: #2db400;
+  color: #2db400;
+}
+
+.naver-btn:hover {
+  background: #2db400;
+  color: #fff;
+}
+
+.kakao-btn {
+  border-color: #fee500;
+  color: #3c1e1e;
+}
+
+.kakao-btn:hover {
+  background: #fee500;
+}
+
+.transport-info {
+  width: 100%;
+  margin-top: 32px;
+  text-align: left;
+}
+
+.transport-info h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.transport-item {
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.transport-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--accent-dark);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.transport-item p {
+  font-size: 0.85rem;
+  color: var(--text);
+  text-align: left;
+}

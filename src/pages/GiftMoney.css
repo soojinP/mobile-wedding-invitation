@@ -1,0 +1,125 @@
+.gift-page {
+  padding-top: 40px;
+  padding-bottom: 120px;
+  min-height: auto;
+}
+
+.gift-message {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.gift-joke {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.account-section {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.account-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.account-toggle:hover {
+  background: var(--bg);
+}
+
+.account-toggle.open {
+  border-bottom: none;
+}
+
+.toggle-arrow {
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
+
+.account-list {
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+.account-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 2px;
+}
+
+.account-relation {
+  font-size: 0.7rem;
+  color: var(--accent-dark);
+}
+
+.account-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.account-detail {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+.copy-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 0.8rem;
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.closing {
+  margin-top: 48px;
+}
+
+.closing-text {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-top: 24px;
+}
+
+.closing-date {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 16px;
+}

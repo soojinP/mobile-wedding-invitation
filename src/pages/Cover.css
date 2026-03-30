@@ -1,0 +1,56 @@
+.cover-page {
+  background: var(--bg);
+  min-height: 100dvh;
+  justify-content: center;
+}
+
+.breaking-news {
+  margin-bottom: 32px;
+}
+
+.breaking-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.cover-headline {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+
+.cover-sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 16px;
+  font-style: italic;
+}
+
+.cover-notice {
+  margin-top: 24px;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text);
+  background: rgba(201, 169, 110, 0.08);
+  padding: 14px 20px;
+  border-left: 3px solid var(--accent);
+}
+
+.cover-date {
+  margin-top: 28px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.cover-venue {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}

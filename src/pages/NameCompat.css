@@ -1,0 +1,139 @@
+.name-page {
+  padding-top: 40px;
+  padding-bottom: 100px;
+  min-height: auto;
+}
+
+.name-sub {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 32px;
+}
+
+.name-display {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.name-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name-char {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-char .char {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.name-char .stroke {
+  font-size: 0.75rem;
+  color: var(--accent-dark);
+  background: rgba(201, 169, 110, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.name-heart {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.calc-section {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.interleaved-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.calc-char {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 44px;
+}
+
+.calc-name {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.calc-num {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 50%;
+}
+
+.calc-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.calc-cell {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text);
+  border-radius: 50%;
+}
+
+.calc-cell.final {
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  border-color: var(--red);
+  font-size: 1.1rem;
+  width: 44px;
+  height: 44px;
+}
+
+.result-section {
+  margin-top: 32px;
+}
+
+.result-percent {
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.result-percent span {
+  font-size: 1.5rem;
+}
+
+.result-comment {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-top: 8px;
+  font-style: italic;
+}
