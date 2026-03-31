@@ -33,20 +33,21 @@ const V1_PAGES = [
 ]
 
 const V2_APPS = {
-  invite: { title: '초대장', component: InviteApp },
-  compat: { title: '궁합', component: CompatApp },
-  name: { title: '이름궁합', component: NameApp },
-  gallery: { title: '사진', component: GalleryApp },
-  venue: { title: '오시는 길', component: VenueApp },
-  shuttle: { title: '셔틀버스', component: ShuttleApp },
-  gift: { title: '축의금', component: GiftApp },
-  music: { title: 'BGM', component: MusicApp },
+  invite: { title: '초대장', component: InviteApp, dark: false },
+  compat: { title: '궁합', component: CompatApp, dark: false },
+  name: { title: '이름궁합', component: NameApp, dark: true },
+  gallery: { title: '사진', component: GalleryApp, dark: false },
+  venue: { title: '오시는 길', component: VenueApp, dark: false },
+  shuttle: { title: '셔틀버스', component: ShuttleApp, dark: false },
+  gift: { title: '축의금', component: GiftApp, dark: false },
+  music: { title: 'BGM', component: MusicApp, dark: false },
 }
 
 function App() {
   const [version, setVersion] = useState('v1')
   const [currentPage, setCurrentPage] = useState(0)
   const [v2App, setV2App] = useState(null)
+  const [v2Unlocked, setV2Unlocked] = useState(false)
 
   const switchToV2 = () => {
     setVersion('v2')
@@ -81,7 +82,7 @@ function App() {
       return (
         <div className="app">
           <BgmPlayer />
-          <V2AppShell title={V2_APPS[v2App].title} onBack={() => setV2App(null)}>
+          <V2AppShell title={V2_APPS[v2App].title} dark={V2_APPS[v2App].dark} onBack={() => setV2App(null)}>
             <AppContent />
           </V2AppShell>
         </div>
@@ -90,7 +91,12 @@ function App() {
     return (
       <div className="app">
         <BgmPlayer />
-        <V2Home onSwitchV1={switchToV1} onAppClick={(id) => setV2App(id)} />
+        <V2Home
+          unlocked={v2Unlocked}
+          onUnlock={() => setV2Unlocked(true)}
+          onSwitchV1={switchToV1}
+          onAppClick={(id) => setV2App(id)}
+        />
       </div>
     )
   }

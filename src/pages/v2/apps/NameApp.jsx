@@ -42,57 +42,124 @@ function calculate() {
   let cur = interleaved
   while (cur.length > 2) {
     const next = []
-    for (let i = 0; i < cur.length - 1; i++) next.push((cur[i] + cur[i+1]) % 10)
+    for (let i = 0; i < cur.length - 1; i++) next.push((cur[i] + cur[i + 1]) % 10)
     rows.push(next)
     cur = next
   }
   return { rows, result: cur.join('') }
 }
 
+// 계산 과정을 하나씩 보여줄 수식 생성
+function getExpressions(rows) {
+  const exprs = []
+  for (let r = 0; r < rows.length - 1; r++) {
+    for (let i = 0; i < rows[r].length - 1; i++) {
+      exprs.push({
+        a: rows[r][i],
+        b: rows[r][i + 1],
+        result: rows[r + 1][i],
+      })
+    }
+  }
+  return exprs
+}
+
 export default function NameApp() {
-  const [started, setStarted] = useState(false)
-  const [visibleRows, setVisibleRows] = useState(1)
   const { rows, result } = calculate()
+  const expressions = getExpressions(rows)
+  const [phase, setPhase] = useState('ready') // ready, calculating, done
+  const [displayText, setDisplayText] = useState('0')
+  const [exprIdx, setExprIdx] = useState(0)
+  const [history, setHistory] = useState([])
+
+  const startCalc = () => {
+    setPhase('calculating')
+    setExprIdx(0)
+    setHistory([])
+    setDisplayText('0')
+  }
 
   useEffect(() => {
-    if (!started || visibleRows >= rows.length) return
-    const timer = setTimeout(() => setVisibleRows(v => v + 1), 500)
+    if (phase !== 'calculating') return
+    if (exprIdx >= expressions.length) {
+      setDisplayText(result + '%')
+      setPhase('done')
+      return
+    }
+    const expr = expressions[exprIdx]
+    const line = `${expr.a} + ${expr.b} = ${(expr.a + expr.b)} → ${expr.result}`
+
+    const timer = setTimeout(() => {
+      setDisplayText(String(expr.result))
+      setHistory((h) => [...h, line])
+      setExprIdx((i) => i + 1)
+    }, 250)
     return () => clearTimeout(timer)
-  }, [started, visibleRows, rows.length])
+  }, [phase, exprIdx, expressions, result])
 
   return (
-    <div>
-      <div className="ios-card" style={{ textAlign: 'center' }}>
-        <p style={{ fontSize: '0.8rem', color: '#8e8e93', marginBottom: 8 }}>획수로 보는 이름 궁합</p>
-        <h3>이창민 x 박수진</h3>
-      </div>
-
-      {!started ? (
-        <button className="ios-btn" onClick={() => setStarted(true)}>궁합 계산하기</button>
-      ) : (
-        <div className="ios-card">
-          {rows.slice(0, visibleRows).map((row, ri) => (
-            <div key={ri} className="ios-name-row">
-              {row.map((n, ni) => (
-                <span
-                  key={ni}
-                  className={`ios-name-cell ${ri === rows.length - 1 ? 'final' : ''}`}
-                >
-                  {n}
-                </span>
-              ))}
-            </div>
-          ))}
-          {visibleRows >= rows.length && (
-            <div style={{ textAlign: 'center', marginTop: 16 }}>
-              <div className="ios-compat-score">{result}<span>%</span></div>
-              <p style={{ fontSize: '0.85rem', color: '#8e8e93', marginTop: 4 }}>
-                {Number(result) >= 80 ? '이 정도면 그냥 결혼하세요 (아 맞다 합니다)' : '나쁘지 않은데요?'}
-              </p>
+    <div className="calc-app">
+      {/* Display */}
+      <div className="calc-display">
+        <div className="calc-history">
+          {phase === 'ready' && (
+            <div className="calc-names">
+              <span>이창민</span>
+              <span className="calc-x">x</span>
+              <span>박수진</span>
             </div>
           )}
+          {history.map((h, i) => (
+            <div key={i} className="calc-history-line">{h}</div>
+          ))}
         </div>
-      )}
+        <div className={`calc-result ${phase === 'done' ? 'final' : ''}`}>
+          {displayText}
+        </div>
+        {phase === 'done' && (
+          <div className="calc-comment">
+            {Number(result) >= 80 ? '이 정도면 결혼감입니다' : '나쁘지 않은 수치입니다'}
+          </div>
+        )}
+      </div>
+
+      {/* Keypad */}
+      <div className="calc-keypad">
+        <div className="calc-row">
+          <button className="calc-key func" disabled>AC</button>
+          <button className="calc-key func" disabled>+/-</button>
+          <button className="calc-key func" disabled>%</button>
+          <button className="calc-key op" disabled>/</button>
+        </div>
+        <div className="calc-row">
+          <button className="calc-key">이</button>
+          <button className="calc-key">창</button>
+          <button className="calc-key">민</button>
+          <button className="calc-key op" disabled>x</button>
+        </div>
+        <div className="calc-row">
+          <button className="calc-key">박</button>
+          <button className="calc-key">수</button>
+          <button className="calc-key">진</button>
+          <button className="calc-key op" disabled>-</button>
+        </div>
+        <div className="calc-row">
+          <button className="calc-key" disabled>획</button>
+          <button className="calc-key" disabled>수</button>
+          <button className="calc-key" disabled>궁</button>
+          <button className="calc-key op" disabled>+</button>
+        </div>
+        <div className="calc-row">
+          <button className="calc-key zero" disabled>합</button>
+          <button className="calc-key" disabled>.</button>
+          <button
+            className={`calc-key eq ${phase === 'ready' ? 'pulse' : ''}`}
+            onClick={phase === 'ready' ? startCalc : phase === 'done' ? () => { setPhase('ready'); setHistory([]); setDisplayText('0') } : undefined}
+          >
+            {phase === 'done' ? 'C' : '='}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

@@ -173,11 +173,9 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
   )
 }
 
-export default function V2Home({ onSwitchV1, onAppClick }) {
-  const [unlocked, setUnlocked] = useState(false)
-
+export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   const handleNotifTap = () => {
-    setUnlocked(true)
+    onUnlock()
     setTimeout(() => onAppClick('invite'), 100)
   }
 
@@ -185,7 +183,7 @@ export default function V2Home({ onSwitchV1, onAppClick }) {
     <div className="iphone-frame">
       <div className="iphone-body">
         {!unlocked ? (
-          <LockScreen onUnlock={() => setUnlocked(true)} onNotifTap={handleNotifTap} />
+          <LockScreen onUnlock={onUnlock} onNotifTap={handleNotifTap} />
         ) : (
           <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} />
         )}

@@ -1,10 +1,10 @@
 import './V2AppShell.css'
 
-export default function V2AppShell({ title, onBack, children }) {
+export default function V2AppShell({ title, dark, onBack, children }) {
   return (
     <div className="iphone-frame">
       <div className="iphone-body">
-        <div className="v2-app-screen">
+        <div className={`v2-app-screen ${dark ? 'v2-dark' : ''}`}>
           <div className="v2-app-header">
             <button className="v2-back-btn" onClick={onBack}>
               <span className="back-chevron">&lsaquo;</span> 홈
