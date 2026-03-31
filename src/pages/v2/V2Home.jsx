@@ -199,8 +199,9 @@ function LockScreen({ onUnlock, onNotifTap }) {
           <div className="now-playing-card">
             <div className="now-playing-art"><span>🎵</span></div>
             <div className="now-playing-info">
-              <div className="now-playing-title">Welcome to Our Show</div>
-              <div className="now-playing-artist">O P Baron</div>
+              <div className="now-playing-title">Wedding March</div>
+              <div className="now-playing-artist">Mendelssohn</div>
+              <div className="now-playing-credit">bgmstore</div>
             </div>
             <div className="now-playing-bars">
               <span /><span /><span /><span />
@@ -269,6 +270,7 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
           <span className="dock-label">V1 모드</span>
         </button>
       </div>
+      <div className="home-watermark">@podonuna</div>
       <div className="home-indicator">
         <div className="indicator-bar" />
       </div>

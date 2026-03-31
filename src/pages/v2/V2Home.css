@@ -301,6 +301,12 @@
   color: rgba(255,255,255,0.6);
 }
 
+.now-playing-credit {
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.3);
+  margin-top: 1px;
+}
+
 .now-playing-bars {
   display: flex;
   align-items: flex-end;
@@ -645,6 +651,15 @@
 .dock-label {
   font-size: 0.6rem;
   color: rgba(255,255,255,0.9);
+}
+
+/* Watermark */
+.home-watermark {
+  font-size: 0.45rem;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+  padding: 2px 0;
+  letter-spacing: 0.05em;
 }
 
 /* Home Indicator */

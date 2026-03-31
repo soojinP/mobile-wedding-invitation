@@ -99,7 +99,7 @@ function App() {
       const AppContent = V2_APPS[v2App].component
       return (
         <div className="app">
-          <BgmPlayer />
+          <BgmPlayer src={version === 'v2' ? '/bgm2.mp3' : '/bgm.mp3'} />
           <V2AppShell title={V2_APPS[v2App].title} dark={V2_APPS[v2App].dark} onBack={() => setV2App(null)}>
             <AppContent />
           </V2AppShell>
@@ -108,7 +108,7 @@ function App() {
     }
     return (
       <div className="app">
-        <BgmPlayer />
+        <BgmPlayer src={version === 'v2' ? '/bgm2.mp3' : '/bgm.mp3'} />
         <V2Home
           unlocked={v2Unlocked}
           onUnlock={() => setV2Unlocked(true)}
@@ -127,7 +127,7 @@ function App() {
 
   return (
     <div className="app newspaper" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <BgmPlayer />
+      <BgmPlayer src={version === 'v2' ? '/bgm2.mp3' : '/bgm.mp3'} />
       <div className="newspaper-header">
         <div className="newspaper-rule" />
         <h1 className="newspaper-title">The Wedding Times</h1>
