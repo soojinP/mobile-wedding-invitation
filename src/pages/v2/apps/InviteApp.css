@@ -1,6 +1,9 @@
 .mail-message {
-  background: #fff;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border: 0.5px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -50,7 +53,7 @@
 }
 
 .mail-info {
-  background: #f2f2f7;
+  background: rgba(0,0,0,0.03);
   border-radius: 10px;
   padding: 14px 16px;
   margin: 16px 0;

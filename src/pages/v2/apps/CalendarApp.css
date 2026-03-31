@@ -14,8 +14,11 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
-  background: #fff;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border: 0.5px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
   padding: 12px 8px;
   margin-bottom: 16px;
 }
@@ -75,8 +78,11 @@
 
 /* Event card */
 .cal-event {
-  background: #fff;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border: 0.5px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
   padding: 14px 16px;
   display: flex;
   gap: 12px;
