@@ -345,32 +345,25 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 }
 
 let _callDone = false;
-let _callTimer = null;
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
-  const [callPhase, setCallPhase] = useState("none"); // none → ringing → done
-  const skipCall = useRef(false);
+  const [showCall, setShowCall] = useState(false);
 
+  // 1초 후 전화 오버레이 (잠금/홈 상관없이)
   useEffect(() => {
-    if (unlocked && !_callDone && !skipCall.current) {
-      _callDone = true;
-      _callTimer = setTimeout(() => {
-        setCallPhase("ringing");
-      }, 1000);
-    }
-    // No cleanup - we want the timer to survive re-renders
-  }, [unlocked]);
+    if (_callDone) return;
+    _callDone = true;
+    const t = setTimeout(() => setShowCall(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
 
   const handleNotifTap = () => {
-    skipCall.current = true;
-    _callDone = true;
-    if (_callTimer) { clearTimeout(_callTimer); _callTimer = null; }
     onUnlock();
     setTimeout(() => onAppClick("invite"), 100);
   };
 
   const handleCallEnd = () => {
-    setCallPhase("done");
+    setShowCall(false);
   };
 
   return (
@@ -378,10 +371,13 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
       <div className="iphone-body">
         {!unlocked ? (
           <LockScreen onUnlock={onUnlock} onNotifTap={handleNotifTap} />
-        ) : callPhase === "ringing" ? (
-          <PhoneCall onEnd={handleCallEnd} />
         ) : (
           <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} />
+        )}
+        {showCall && (
+          <div className="call-overlay">
+            <PhoneCall onEnd={handleCallEnd} />
+          </div>
         )}
       </div>
     </div>

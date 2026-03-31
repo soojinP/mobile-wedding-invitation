@@ -665,6 +665,13 @@
   color: rgba(255,255,255,0.9);
 }
 
+/* Call overlay */
+.call-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+}
+
 /* Watermark */
 .home-watermark {
   font-size: 0.45rem;
