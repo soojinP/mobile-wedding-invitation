@@ -1,0 +1,99 @@
+.mail-message {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mail-header {
+  padding: 14px 16px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
+}
+
+.mail-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 3px 0;
+}
+
+.mail-label {
+  font-size: 0.72rem;
+  color: #8e8e93;
+  flex-shrink: 0;
+  min-width: 48px;
+}
+
+.mail-value {
+  font-size: 0.8rem;
+  color: #000;
+}
+
+.mail-value.subject {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.mail-body {
+  padding: 20px 16px;
+}
+
+.mail-body p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #3c3c43;
+  margin-bottom: 12px;
+}
+
+.mail-greeting {
+  font-weight: 600;
+  color: #000 !important;
+}
+
+.mail-info {
+  background: #f2f2f7;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mail-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #000;
+}
+
+.mail-parents {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 16px;
+  border-top: 0.5px solid rgba(0,0,0,0.08);
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
+}
+
+.mail-parent-side p {
+  font-size: 0.78rem;
+  color: #8e8e93;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.mail-parent-label {
+  font-size: 0.7rem !important;
+  font-weight: 600;
+  color: #007aff !important;
+  margin-bottom: 4px !important;
+}
+
+.mail-sign {
+  text-align: right;
+  font-weight: 500;
+  color: #000 !important;
+  margin-top: 16px;
+}

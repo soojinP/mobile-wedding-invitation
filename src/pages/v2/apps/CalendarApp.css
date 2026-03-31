@@ -1,0 +1,128 @@
+.cal-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.cal-month {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Grid */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 8px;
+  margin-bottom: 16px;
+}
+
+.cal-weekday {
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #8e8e93;
+  padding-bottom: 8px;
+}
+
+.cal-weekday.sun { color: #ff3b30; }
+.cal-weekday.sat { color: #007aff; }
+
+.cal-cell {
+  text-align: center;
+  padding: 6px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 36px;
+}
+
+.cal-day {
+  font-size: 0.8rem;
+  color: #000;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.cal-cell.holiday .cal-day { color: #ff3b30; }
+.cal-cell.sat .cal-day { color: #007aff; }
+
+.cal-cell.selected .cal-day {
+  background: #ff3b30;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.cal-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ff3b30;
+  margin-top: 2px;
+}
+
+.cal-dot.green {
+  background: #34c759;
+}
+
+/* Event card */
+.cal-event {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cal-event.secondary {
+  opacity: 0.8;
+}
+
+.cal-event-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: #ff3b30;
+  flex-shrink: 0;
+}
+
+.cal-event-bar.green {
+  background: #34c759;
+}
+
+.cal-event-content {
+  flex: 1;
+}
+
+.cal-event-time {
+  font-size: 0.7rem;
+  color: #8e8e93;
+  margin-bottom: 4px;
+}
+
+.cal-event-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+.cal-event-location {
+  font-size: 0.78rem;
+  color: #8e8e93;
+}
+
+.cal-event-note {
+  font-size: 0.72rem;
+  color: #ff9500;
+  margin-top: 4px;
+  font-weight: 500;
+}

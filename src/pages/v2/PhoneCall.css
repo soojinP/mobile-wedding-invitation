@@ -84,12 +84,14 @@
   height: 64px;
   border-radius: 50%;
   border: none;
+  outline: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
   transition: transform 0.15s;
 }
 

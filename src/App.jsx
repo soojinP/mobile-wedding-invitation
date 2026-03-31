@@ -19,6 +19,7 @@ import VenueApp from './pages/v2/apps/VenueApp'
 import ShuttleApp from './pages/v2/apps/ShuttleApp'
 import GiftApp from './pages/v2/apps/GiftApp'
 import FortuneApp from './pages/v2/apps/FortuneApp'
+import CalendarApp from './pages/v2/apps/CalendarApp'
 import GuestbookApp from './pages/v2/apps/GuestbookApp'
 import './styles/global.css'
 
@@ -35,6 +36,7 @@ const V1_PAGES = [
 
 const V2_APPS = {
   invite: { title: '초대장', component: InviteApp, dark: false },
+  calendar: { title: '캘린더', component: CalendarApp, dark: false },
   compat: { title: '궁합', component: CompatApp, dark: false },
   name: { title: '이름궁합', component: NameApp, dark: true },
   gallery: { title: '사진', component: GalleryApp, dark: false },

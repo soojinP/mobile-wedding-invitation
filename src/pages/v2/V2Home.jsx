@@ -3,7 +3,8 @@ import PhoneCall from './PhoneCall'
 import './V2Home.css'
 
 const APPS = [
-  { id: 'invite', iconType: 'calendar', label: '초대장', color: '#fff' },
+  { id: 'invite', iconType: 'mail', label: '초대장', color: 'linear-gradient(180deg, #5ac8fa, #007aff)' },
+  { id: 'calendar', iconType: 'calendar', label: '캘린더', color: '#fff' },
   { id: 'compat', iconType: 'hearts', label: '궁합', color: 'linear-gradient(135deg, #ff6b9d, #c44dff)' },
   { id: 'name', iconType: 'calc', label: '이름궁합', color: '#1c1c1e' },
   { id: 'gallery', iconType: 'photos', label: '사진', color: '#fff' },
@@ -16,6 +17,15 @@ const APPS = [
 
 function AppIcon({ type }) {
   switch (type) {
+    case 'mail':
+      return (
+        <div className="icon-mail">
+          <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+            <rect x="1" y="1" width="28" height="20" rx="3" stroke="#fff" strokeWidth="2" fill="none" />
+            <path d="M1 1l14 11L29 1" stroke="#fff" strokeWidth="2" fill="none" strokeLinejoin="round" />
+          </svg>
+        </div>
+      )
     case 'calendar':
       return (
         <div className="icon-calendar">
