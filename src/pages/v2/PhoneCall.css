@@ -115,12 +115,18 @@
 }
 
 .call-icon-phone {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
 .call-icon-phone.rotated {
   transform: rotate(135deg);
+}
+
+.call-icon-phone svg {
+  display: block;
 }
 
 @keyframes ringPulse {
