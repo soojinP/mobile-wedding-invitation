@@ -1,26 +1,27 @@
 .bgm-btn {
   position: fixed;
-  top: 16px;
+  bottom: 24px;
   right: 16px;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: rgba(250, 249, 246, 0.9);
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   font-size: 1rem;
   cursor: pointer;
-  z-index: 150;
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
-  color: var(--text-light);
+  color: rgba(255,255,255,0.6);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .bgm-btn.playing {
-  color: var(--accent-dark);
-  border-color: var(--accent);
+  color: #ff9f0a;
+  background: rgba(0, 0, 0, 0.6);
   animation: pulse-music 1.5s ease-in-out infinite;
 }
 
