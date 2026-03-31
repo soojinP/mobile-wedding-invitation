@@ -1,0 +1,194 @@
+import { useState, useEffect, useRef } from 'react'
+import './PhoneCall.css'
+
+const SCRIPT = [
+  { delay: 800, text: '여보세요~?' },
+  { delay: 1200, text: '아 {name}님이시구나!' },
+  { delay: 1800, text: '다름이 아니라...' },
+  { delay: 1200, text: '저희 결혼합니다!!! 🎉' },
+  { delay: 2000, text: '2026년 5월 25일 월요일 오후 1시' },
+  { delay: 1500, text: '연세대학교 동문회관이요' },
+  { delay: 1800, text: '대체공휴일이라 쉬는 날이에요 ㅎㅎ' },
+  { delay: 1500, text: '{name}님 꼭 와주셔야 해요!!' },
+  { delay: 1500, text: '밥은 맛있을 예정입니다 👀' },
+  { delay: 1200, text: '그럼 그날 봐요~! 💕' },
+]
+
+export default function PhoneCall({ onEnd }) {
+  const [phase, setPhase] = useState('ringing') // ringing → connected → name → talking → ended
+  const [guestName, setGuestName] = useState('')
+  const [messages, setMessages] = useState([])
+  const [scriptIdx, setScriptIdx] = useState(0)
+  const [callTime, setCallTime] = useState(0)
+  const [nameSubmitted, setNameSubmitted] = useState(false)
+  const msgsEndRef = useRef(null)
+
+  // Call timer
+  useEffect(() => {
+    if (phase !== 'name' && phase !== 'talking') return
+    const t = setInterval(() => setCallTime(c => c + 1), 1000)
+    return () => clearInterval(t)
+  }, [phase])
+
+  // Script progression
+  useEffect(() => {
+    if (phase !== 'talking') return
+    if (scriptIdx >= SCRIPT.length) {
+      const t = setTimeout(() => setPhase('ended'), 1500)
+      return () => clearTimeout(t)
+    }
+    const { delay, text } = SCRIPT[scriptIdx]
+    const t = setTimeout(() => {
+      const name = guestName.trim() || '하객'
+      setMessages(prev => [...prev, text.replace(/{name}/g, name)])
+      setScriptIdx(i => i + 1)
+    }, delay)
+    return () => clearTimeout(t)
+  }, [phase, scriptIdx, guestName])
+
+  // Auto-scroll messages
+  useEffect(() => {
+    msgsEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  // End screen auto-dismiss
+  useEffect(() => {
+    if (phase !== 'ended') return
+    const t = setTimeout(onEnd, 2500)
+    return () => clearTimeout(t)
+  }, [phase, onEnd])
+
+  const answerCall = () => {
+    setPhase('connected')
+    setTimeout(() => setPhase('name'), 600)
+  }
+
+  const declineCall = () => {
+    onEnd()
+  }
+
+  const submitName = () => {
+    if (!guestName.trim()) return
+    setNameSubmitted(true)
+    setTimeout(() => setPhase('talking'), 500)
+  }
+
+  const formatTime = (s) => {
+    const m = Math.floor(s / 60)
+    const sec = s % 60
+    return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
+  }
+
+  // Ringing screen
+  if (phase === 'ringing') {
+    return (
+      <div className="call-screen ringing">
+        <div className="call-top">
+          <div className="call-caller-label">수신 전화</div>
+          <div className="call-caller-name">창민 & 수진</div>
+          <div className="call-caller-sub">대한민국</div>
+        </div>
+        <div className="call-bottom">
+          <div className="call-actions-ring">
+            <button className="call-btn-round decline" onClick={declineCall}>
+              <span className="call-icon-phone rotated">📞</span>
+            </button>
+            <button className="call-btn-round accept" onClick={answerCall}>
+              <span className="call-icon-phone">📞</span>
+            </button>
+          </div>
+          <div className="call-labels-ring">
+            <span>거절</span>
+            <span>수락</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Connected (brief transition)
+  if (phase === 'connected') {
+    return (
+      <div className="call-screen connected">
+        <div className="call-top">
+          <div className="call-caller-name">창민 & 수진</div>
+          <div className="call-status">연결 중...</div>
+        </div>
+      </div>
+    )
+  }
+
+  // Name input (ARS)
+  if (phase === 'name') {
+    return (
+      <div className="call-screen in-call">
+        <div className="call-top">
+          <div className="call-caller-name">창민 & 수진</div>
+          <div className="call-status">{formatTime(callTime)}</div>
+        </div>
+        <div className="call-ars">
+          <div className="ars-bubble fade-in">
+            안녕하세요! 이창민 & 박수진 결혼식 ARS입니다.
+          </div>
+          <div className="ars-bubble fade-in" style={{ animationDelay: '0.8s' }}>
+            성함을 입력해주세요.
+          </div>
+          <div className="ars-input-wrap fade-in" style={{ animationDelay: '1.5s' }}>
+            <input
+              className="ars-input"
+              placeholder="이름 입력"
+              value={guestName}
+              onChange={(e) => setGuestName(e.target.value)}
+              maxLength={10}
+              autoFocus
+              onKeyDown={(e) => e.key === 'Enter' && submitName()}
+            />
+            <button
+              className="ars-submit"
+              onClick={submitName}
+              disabled={!guestName.trim()}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+        <div className="call-bottom-bar">
+          <button className="call-btn-round decline small" onClick={onEnd}>
+            <span className="call-icon-phone rotated">📞</span>
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Talking / ended
+  return (
+    <div className="call-screen in-call">
+      <div className="call-top">
+        <div className="call-caller-name">창민 & 수진</div>
+        <div className="call-status">
+          {phase === 'ended' ? '통화 종료' : formatTime(callTime)}
+        </div>
+      </div>
+      <div className="call-messages">
+        {messages.map((msg, i) => (
+          <div key={i} className="call-msg fade-in">
+            <div className="call-msg-bubble">{msg}</div>
+          </div>
+        ))}
+        <div ref={msgsEndRef} />
+      </div>
+      {phase === 'ended' ? (
+        <div className="call-ended-wrap fade-in">
+          <div className="call-ended-text">통화가 종료되었습니다</div>
+        </div>
+      ) : (
+        <div className="call-bottom-bar">
+          <button className="call-btn-round decline small" onClick={() => setPhase('ended')}>
+            <span className="call-icon-phone rotated">📞</span>
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}

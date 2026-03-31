@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import PhoneCall from './PhoneCall'
 import './V2Home.css'
 
 const APPS = [
@@ -266,9 +267,25 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 }
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
+  const [callPhase, setCallPhase] = useState('none') // none → ringing → done
+  const callTriggered = useRef(false)
+
+  useEffect(() => {
+    if (unlocked && !callTriggered.current) {
+      callTriggered.current = true
+      const t = setTimeout(() => setCallPhase('ringing'), 2000)
+      return () => clearTimeout(t)
+    }
+  }, [unlocked])
+
   const handleNotifTap = () => {
     onUnlock()
+    callTriggered.current = true // skip call if entered via notification
     setTimeout(() => onAppClick('invite'), 100)
+  }
+
+  const handleCallEnd = () => {
+    setCallPhase('done')
   }
 
   return (
@@ -276,6 +293,8 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
       <div className="iphone-body">
         {!unlocked ? (
           <LockScreen onUnlock={onUnlock} onNotifTap={handleNotifTap} />
+        ) : callPhase === 'ringing' ? (
+          <PhoneCall onEnd={handleCallEnd} />
         ) : (
           <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} />
         )}
