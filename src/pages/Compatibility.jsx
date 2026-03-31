@@ -79,6 +79,17 @@ const CATEGORIES = [
   },
 ]
 
+const BONUSES = [
+  { label: '서로 좋아하는 마음', score: 5, emoji: '💕' },
+  { label: '대체공휴일에 결혼하는 센스', score: 3, emoji: '🗓' },
+  { label: '이 청첩장 끝까지 본 하객의 응원', score: 2, emoji: '👏' },
+  { label: '기자단 특별 보정 (결혼하니까)', score: 2, emoji: '🎁' },
+]
+
+const BASE_SCORE = Math.round(
+  CATEGORIES.reduce((sum, c) => sum + c.score, 0) / CATEGORIES.length
+)
+
 const LOADING_STEPS = [
   '커플 데이터 수집 중...',
   'MBTI 유형 분석 중...',
@@ -93,6 +104,10 @@ export default function Compatibility({ onNext }) {
   const [loadingIdx, setLoadingIdx] = useState(0)
   const [progress, setProgress] = useState(0)
   const [revealedCount, setRevealedCount] = useState(0)
+  const [bonusPhase, setBonusPhase] = useState(false)
+  const [bonusCount, setBonusCount] = useState(0)
+  const [displayScore, setDisplayScore] = useState(BASE_SCORE)
+  const [perfect, setPerfect] = useState(false)
 
   const startAnalysis = () => {
     setPhase('loading')
@@ -129,15 +144,32 @@ export default function Compatibility({ onNext }) {
     }
   }, [phase])
 
+  // Reveal category cards one by one, then start bonus phase
   useEffect(() => {
-    if (phase !== 'result' || revealedCount >= CATEGORIES.length) return
-    const timer = setTimeout(() => setRevealedCount((c) => c + 1), 400)
-    return () => clearTimeout(timer)
-  }, [phase, revealedCount])
+    if (phase !== 'result') return
+    if (revealedCount < CATEGORIES.length) {
+      const timer = setTimeout(() => setRevealedCount((c) => c + 1), 400)
+      return () => clearTimeout(timer)
+    }
+    if (revealedCount === CATEGORIES.length && !bonusPhase) {
+      const timer = setTimeout(() => setBonusPhase(true), 800)
+      return () => clearTimeout(timer)
+    }
+  }, [phase, revealedCount, bonusPhase])
 
-  const totalScore = Math.round(
-    CATEGORIES.reduce((sum, c) => sum + c.score, 0) / CATEGORIES.length
-  )
+  // Reveal bonuses one by one
+  useEffect(() => {
+    if (!bonusPhase) return
+    if (bonusCount >= BONUSES.length) {
+      const timer = setTimeout(() => setPerfect(true), 600)
+      return () => clearTimeout(timer)
+    }
+    const timer = setTimeout(() => {
+      setBonusCount((c) => c + 1)
+      setDisplayScore((s) => Math.min(s + BONUSES[bonusCount].score, 100))
+    }, 700)
+    return () => clearTimeout(timer)
+  }, [bonusPhase, bonusCount])
 
   return (
     <div className="page compat-page">
@@ -190,13 +222,50 @@ export default function Compatibility({ onNext }) {
 
       {phase === 'result' && (
         <div className="result-section">
-          <div className="total-score fade-in">
-            <div className="total-number">{totalScore}<span>점</span></div>
-            <div className="total-label">종합 궁합</div>
-            <div className="total-comment">
-              {totalScore >= 85 ? '"이 정도면 그냥 결혼하셔야죠" — 본지 궁합 전문기자' : '"나쁘지 않은데요?" — 본지 궁합 전문기자'}
+          <div className={`total-score fade-in ${perfect ? 'perfect' : ''}`}>
+            <div className={`total-number ${perfect ? 'score-perfect' : ''}`}>
+              {displayScore}<span>점</span>
             </div>
+            <div className="total-label">종합 궁합</div>
+            {!bonusPhase && (
+              <div className="total-comment">
+                "88점... 나쁘진 않은데 뭔가 아쉽군요" — 본지 궁합 전문기자
+              </div>
+            )}
+            {bonusPhase && !perfect && (
+              <div className="total-comment bonus-comment fade-in">
+                "잠깐, 보너스 점수가 남아있습니다!"
+              </div>
+            )}
+            {perfect && (
+              <div className="total-comment perfect-comment fade-in">
+                "만점! 이 커플 결혼 안 하면 누가 합니까" — 본지 궁합 전문기자
+              </div>
+            )}
           </div>
+
+          {/* Bonus section */}
+          {bonusPhase && (
+            <div className="bonus-section fade-in">
+              <div className="bonus-title">
+                [속보] 보너스 점수 추가 발견!
+              </div>
+              {BONUSES.map((b, i) => (
+                i < bonusCount && (
+                  <div key={i} className="bonus-item fade-in">
+                    <span className="bonus-emoji">{b.emoji}</span>
+                    <span className="bonus-label">{b.label}</span>
+                    <span className="bonus-score">+{b.score}점</span>
+                  </div>
+                )
+              ))}
+              {perfect && (
+                <div className="bonus-total fade-in">
+                  최종 점수: <strong>100점 (SSS)</strong>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="news-articles">
             {CATEGORIES.map((cat, i) => (
@@ -225,7 +294,7 @@ export default function Compatibility({ onNext }) {
             ))}
           </div>
 
-          {revealedCount >= CATEGORIES.length && (
+          {perfect && (
             <button className="btn fade-in-delay" onClick={onNext} style={{ marginTop: 32 }}>
               이름 궁합도 볼래?
             </button>

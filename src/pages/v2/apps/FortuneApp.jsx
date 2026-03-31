@@ -2,18 +2,18 @@ import { useState } from 'react'
 import './FortuneApp.css'
 
 const FORTUNES = [
-  { tag: '신랑', text: '창민이는 라면 끓일 때 물 양 조절을 못 합니다. 매번 냄비가 넘칩니다.' },
-  { tag: '신부', text: '수진이는 화나면 3일간 말을 안 합니다. 그리고 4일째 아무 일 없었다는 듯 말합니다.' },
-  { tag: '신랑', text: '창민이는 길치입니다. 네비 켜놓고도 반대로 갑니다.' },
-  { tag: '신부', text: '수진이는 잠버릇이 나쁩니다. 이불을 100% 독점합니다.' },
-  { tag: '커플', text: '이 커플의 첫 만남: 소개팅이었는데 창민이가 30분 늦었습니다.' },
-  { tag: '신랑', text: '창민이의 특기: 아무 노래나 불러달라고 하면 항상 같은 노래를 부릅니다.' },
-  { tag: '신부', text: '수진이는 계획형 인간입니다. 여행 계획표가 분 단위입니다.' },
-  { tag: '커플', text: '이 커플의 싸움 패턴: 싸우다 배고파지면 자동 화해됩니다.' },
-  { tag: '신랑', text: '창민이는 본인이 ENTP인 걸 매우 자랑스러워합니다.' },
-  { tag: '신부', text: '수진이가 가장 좋아하는 말: "그건 논리적으로 맞지 않아"' },
-  { tag: '커플', text: '이 커플이 제일 많이 하는 말: "뭐 먹지?"' },
-  { tag: '신랑', text: '창민이는 사진 찍을 때 표정이 3개뿐입니다.' },
+  { tag: 'MBTI', text: 'ENTP x INTP: NT 유형끼리 만나면 대화가 끊이질 않음. 말싸움은 많지만 이혼 사유는 아님!' },
+  { tag: 'MBTI', text: 'E와 I의 조합 — 밖에서 에너지 충전 vs 집에서 충전. 서로 존중만 하면 완벽한 궁합.' },
+  { tag: 'MBTI', text: 'P끼리 만나면 여행 계획은 영원히 미정. 그래도 즉흥이 더 재미있는 커플.' },
+  { tag: '혈액형', text: 'O형 남자의 넓은 품이 B형 여자의 자유를 감싸줌. 의외로 찰떡궁합!' },
+  { tag: '혈액형', text: 'O형의 질투 + B형의 마이웨이 = 가끔 불꽃 튀지만 그게 재미.' },
+  { tag: '혈액형', text: 'O형은 리드하고 싶고, B형은 알아서 하고 싶고. 적절한 긴장감이 관계의 비결.' },
+  { tag: '띠', text: '원숭이띠 x 돼지띠: 원숭이가 장난치면 돼지가 진심으로 웃어줌. 원숭이 신남!' },
+  { tag: '띠', text: '원숭이의 재치와 돼지의 순수함이 만나면 웃음이 끊이지 않는 조합.' },
+  { tag: '별자리', text: '게자리 x 황소자리: 둘 다 안정적인 관계 추구. 바람 걱정 제로!' },
+  { tag: '별자리', text: '게자리가 삐지면 황소자리가 눈치채기까지 3일 소요. 느리지만 확실한 사랑.' },
+  { tag: '출생순서', text: '첫째 x 둘째: 겉으로는 창민이가 가장, 실제로는 수진이가 운영하는 구조.' },
+  { tag: '출생순서', text: '첫째의 고집 vs 둘째의 처세술 — 결국 둘째가 이기는 구조입니다.' },
 ]
 
 function Cookie({ fortune, index, onCrack, cracked }) {
@@ -28,7 +28,8 @@ function Cookie({ fortune, index, onCrack, cracked }) {
     }, 600)
   }
 
-  const tagColor = fortune.tag === '신랑' ? '#007aff' : fortune.tag === '신부' ? '#ff2d55' : '#ff9500'
+  const tagColors = { 'MBTI': '#af52de', '혈액형': '#ff9500', '띠': '#34c759', '별자리': '#007aff', '출생순서': '#ff3b30' }
+  const tagColor = tagColors[fortune.tag] || '#8e8e93'
 
   return (
     <div className={`fortune-cookie-wrap ${cracked ? 'opened' : ''}`}>
@@ -72,7 +73,7 @@ export default function FortuneApp() {
       <div className="ios-card" style={{ textAlign: 'center' }}>
         <h3 style={{ fontSize: '1.2rem' }}>포춘 쿠키</h3>
         <p style={{ fontSize: '0.8rem', color: '#8e8e93', marginTop: 4 }}>
-          쿠키를 깨면 신랑 신부의 비밀이 나옵니다
+          쿠키를 깨면 사주궁합 정보가 나옵니다
         </p>
         <p style={{ fontSize: '0.7rem', color: '#c7c7cc', marginTop: 8 }}>
           {crackedSet.size} / {shuffled.length} 개 열림
@@ -95,7 +96,7 @@ export default function FortuneApp() {
         <div className="fortune-complete">
           <p>모든 쿠키를 열었습니다!</p>
           <p className="fortune-complete-sub">
-            이 정도면 신랑 신부를 꽤 잘 아시는 겁니다
+            종합 궁합 100점, 이 커플 결혼 안 하면 누가 합니까!
           </p>
         </div>
       )}
