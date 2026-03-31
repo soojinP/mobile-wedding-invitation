@@ -345,19 +345,26 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 }
 
 let _callDone = false;
+let _callTimer = null;
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   const [callPhase, setCallPhase] = useState("none"); // none → ringing → done
+  const skipCall = useRef(false);
 
   useEffect(() => {
-    if (unlocked && !_callDone) {
+    if (unlocked && !_callDone && !skipCall.current) {
       _callDone = true;
-      const t = setTimeout(() => setCallPhase("ringing"), 1000);
-      return () => clearTimeout(t);
+      _callTimer = setTimeout(() => {
+        setCallPhase("ringing");
+      }, 1000);
     }
+    // No cleanup - we want the timer to survive re-renders
   }, [unlocked]);
 
   const handleNotifTap = () => {
+    skipCall.current = true;
+    _callDone = true;
+    if (_callTimer) { clearTimeout(_callTimer); _callTimer = null; }
     onUnlock();
     setTimeout(() => onAppClick("invite"), 100);
   };

@@ -2,18 +2,18 @@ import { useState } from 'react'
 import './FortuneApp.css'
 
 const FORTUNES = [
-  { tag: 'MBTI', text: 'ENTP 창민: "이거 어때?" INTP 수진: "근거는?" 매일 반복되는 토론회. 근데 본인들은 이게 대화래요.' },
-  { tag: 'MBTI', text: 'P+P 커플의 여행: 공항에서 "어디 갈까?" 시작. 계획은 없지만 추억은 있는 타입.' },
-  { tag: 'MBTI', text: 'E는 밖에서 충전, I는 집에서 충전. 결론: 창민이 혼자 나갔다가 수진이한테 영상통화 거는 구조.' },
-  { tag: '혈액형', text: 'O형 창민이의 카톡: "어디야? 뭐해? 밥 먹었어?" B형 수진이의 답장: "ㅇㅇ" (3시간 뒤)' },
-  { tag: '혈액형', text: 'O형은 서프라이즈를 준비하고 B형은 리액션이 쿨함. 창민: "깜짝!" 수진: "오 ㅋㅋ 고마워~" 창민: "...끝?"' },
-  { tag: '혈액형', text: 'B형 여자의 마이웨이를 O형 남자가 뒤에서 묵묵히 서포트하는 구조. 의외로 이게 오래감.' },
-  { tag: '띠', text: '원숭이띠 + 돼지띠 = 맛집 탐방 궁합 만점. 둘이 만나면 "뭐 먹지?"가 인사말.' },
-  { tag: '띠', text: '원숭이가 장난치면 돼지가 진심으로 빵 터짐. 원숭이 자존감 급상승. 무한 반복.' },
-  { tag: '별자리', text: '게자리 창민이가 삐졌을 때: (아무 말 안 함) 황소자리 수진이: (3일 뒤) "왜 그래?" 타이밍의 예술.' },
-  { tag: '별자리', text: '게자리 x 황소자리: 둘 다 집이 최고. 주말 계획 = 소파 + 넷플릭스 + 배달. 완벽한 합의.' },
-  { tag: '출생순서', text: '장남 창민: "내가 결정할게" 둘째 수진: "그래~ (이미 다 정해놓음)" 실권은 둘째에게.' },
-  { tag: '출생순서', text: '첫째의 책임감 + 둘째의 눈치력. 집안일 분담 협상에서 둘째가 항상 이기는 이유가 있음.' },
+  { tag: '신랑', text: '창민이는 라면 끓일 때 물 양 조절을 못 합니다. 매번 냄비가 넘칩니다.' },
+  { tag: '신부', text: '수진이는 화나면 3일간 말을 안 합니다. 그리고 4일째 아무 일 없었다는 듯 말합니다.' },
+  { tag: '신랑', text: '창민이는 길치입니다. 네비 켜놓고도 반대로 갑니다.' },
+  { tag: '신부', text: '수진이는 잠버릇이 나쁩니다. 이불을 100% 독점합니다.' },
+  { tag: '커플', text: '이 커플의 싸움 패턴: 싸우다 배고파지면 자동 화해됩니다.' },
+  { tag: '신랑', text: '창민이의 특기: 아무 노래나 불러달라고 하면 항상 같은 노래를 부릅니다.' },
+  { tag: '신부', text: '수진이는 계획형 인간입니다. 여행 계획표가 분 단위입니다.' },
+  { tag: '커플', text: '이 커플이 제일 많이 하는 말: "뭐 먹지?"' },
+  { tag: '신랑', text: '창민이는 본인이 ENTP인 걸 매우 자랑스러워합니다.' },
+  { tag: '신부', text: '수진이가 가장 좋아하는 말: "그건 논리적으로 맞지 않아"' },
+  { tag: '커플', text: '주말 데이트 코스: 카페 → 맛집 → 소파 → 넷플릭스. 매주 동일.' },
+  { tag: '신랑', text: '창민이는 사진 찍을 때 표정이 3개뿐입니다.' },
 ]
 
 function Cookie({ fortune, index, onCrack, cracked }) {
@@ -28,8 +28,7 @@ function Cookie({ fortune, index, onCrack, cracked }) {
     }, 600)
   }
 
-  const tagColors = { 'MBTI': '#af52de', '혈액형': '#ff9500', '띠': '#34c759', '별자리': '#007aff', '출생순서': '#ff3b30' }
-  const tagColor = tagColors[fortune.tag] || '#8e8e93'
+  const tagColor = fortune.tag === '신랑' ? '#007aff' : fortune.tag === '신부' ? '#ff2d55' : '#ff9500'
 
   return (
     <div className={`fortune-cookie-wrap ${cracked ? 'opened' : ''}`}>
@@ -73,7 +72,7 @@ export default function FortuneApp() {
       <div className="ios-card" style={{ textAlign: 'center' }}>
         <h3 style={{ fontSize: '1.2rem' }}>포춘 쿠키</h3>
         <p style={{ fontSize: '0.8rem', color: '#8e8e93', marginTop: 4 }}>
-          쿠키를 깨면 사주궁합 정보가 나옵니다
+          쿠키를 깨면 신랑 신부의 비밀이 나옵니다
         </p>
         <p style={{ fontSize: '0.7rem', color: '#c7c7cc', marginTop: 8 }}>
           {crackedSet.size} / {shuffled.length} 개 열림
@@ -96,7 +95,7 @@ export default function FortuneApp() {
         <div className="fortune-complete">
           <p>모든 쿠키를 열었습니다!</p>
           <p className="fortune-complete-sub">
-            종합 궁합 100점, 이 커플 결혼 안 하면 누가 합니까!
+            이 정도면 신랑 신부를 꽤 잘 아시는 겁니다
           </p>
         </div>
       )}
