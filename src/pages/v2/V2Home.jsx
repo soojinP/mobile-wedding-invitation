@@ -8,14 +8,14 @@ const APPS = [
     id: "invite",
     iconType: "mail",
     label: "초대장",
-    color: "linear-gradient(180deg, #5ac8fa, #007aff)",
+    color: "linear-gradient(180deg, #34aadc, #007aff)",
   },
   { id: "calendar", iconType: "calendar", label: "캘린더", color: "#fff" },
   {
     id: "compat",
     iconType: "hearts",
     label: "궁합",
-    color: "linear-gradient(135deg, #ff6b9d, #c44dff)",
+    color: "linear-gradient(135deg, #ff2d55, #ff375f)",
   },
   { id: "name", iconType: "calc", label: "이름궁합", color: "#1c1c1e" },
   { id: "gallery", iconType: "photos", label: "사진", color: "#fff" },
@@ -23,7 +23,7 @@ const APPS = [
     id: "venue",
     iconType: "maps",
     label: "오시는 길",
-    color: "linear-gradient(135deg, #4cd964, #5ac8fa)",
+    color: "linear-gradient(135deg, #63da38, #4cd964)",
   },
   {
     id: "shuttle",
@@ -41,7 +41,7 @@ const APPS = [
     id: "guestbook",
     iconType: "notes",
     label: "방명록",
-    color: "linear-gradient(180deg, #fffc00, #ffcc02)",
+    color: "#fff",
   },
   { id: "gift", iconType: "wallet", label: "축의금", color: "#1c1c1e" },
 ];
@@ -51,49 +51,45 @@ function AppIcon({ type }) {
     case "mail":
       return (
         <div className="icon-mail">
-          <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
-            <rect
-              x="1"
-              y="1"
-              width="28"
-              height="20"
-              rx="3"
-              stroke="#fff"
-              strokeWidth="2"
-              fill="none"
-            />
-            <path
-              d="M1 1l14 11L29 1"
-              stroke="#fff"
-              strokeWidth="2"
-              fill="none"
-              strokeLinejoin="round"
-            />
+          <svg width="32" height="24" viewBox="0 0 32 24" fill="none">
+            <rect x="1" y="1" width="30" height="22" rx="4" fill="rgba(255,255,255,0.25)" />
+            <rect x="1" y="1" width="30" height="22" rx="4" stroke="#fff" strokeWidth="1.5" fill="none" />
+            <path d="M2 3l14 10L30 3" stroke="#fff" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       );
     case "calendar":
       return (
         <div className="icon-calendar">
-          <div className="icon-cal-header">월요일</div>
+          <div className="icon-cal-header">월</div>
           <div className="icon-cal-day">25</div>
         </div>
       );
     case "hearts":
-      return <div className="icon-inner">💕</div>;
+      return (
+        <div className="icon-inner">
+          <svg width="32" height="30" viewBox="0 0 32 30" fill="none">
+            <path
+              d="M16 28s-12-7.5-14-15C0.5 6 4 1 9.5 1c3.5 0 5.5 2 6.5 3.5C17 3 19 1 22.5 1 28 1 31.5 6 30 13 28 20.5 16 28 16 28z"
+              fill="#fff"
+            />
+          </svg>
+        </div>
+      );
     case "calc":
       return (
         <div className="icon-calc">
+          <div className="icon-calc-display">0</div>
           <div className="icon-calc-grid">
-            <span style={{ background: "#a5a5a5" }} />
-            <span style={{ background: "#a5a5a5" }} />
-            <span style={{ background: "#ff9f0a" }} />
-            <span style={{ background: "#333" }} />
-            <span style={{ background: "#333" }} />
-            <span style={{ background: "#ff9f0a" }} />
-            <span style={{ background: "#333" }} />
-            <span style={{ background: "#333" }} />
-            <span style={{ background: "#ff9f0a" }} />
+            <span className="calc-light" />
+            <span className="calc-light" />
+            <span className="calc-orange" />
+            <span className="calc-dark" />
+            <span className="calc-dark" />
+            <span className="calc-orange" />
+            <span className="calc-dark" />
+            <span className="calc-dark" />
+            <span className="calc-orange" />
           </div>
         </div>
       );
@@ -115,35 +111,39 @@ function AppIcon({ type }) {
       );
     case "maps":
       return (
-        <div className="icon-inner">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path
-              d="M14 4l-2 8-8 2 8 2 2 8 2-8 8-2-8-2z"
-              fill="#fff"
-              opacity="0.9"
-            />
+        <div className="icon-maps">
+          <div className="icon-maps-bg" />
+          <svg className="icon-maps-pin" width="20" height="26" viewBox="0 0 20 26" fill="none">
+            <path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 16 10 16s10-8.5 10-16C20 4.5 15.5 0 10 0z" fill="#ff3b30" />
+            <circle cx="10" cy="10" r="4" fill="#fff" />
           </svg>
         </div>
       );
     case "transit":
       return (
-        <div
-          className="icon-inner"
-          style={{ fontSize: "1.4rem", color: "#fff" }}
-        >
-          🚌
+        <div className="icon-inner">
+          <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+            <rect x="4" y="2" width="20" height="22" rx="6" fill="#fff" />
+            <rect x="7" y="6" width="14" height="8" rx="2" fill="#5ac8fa" />
+            <circle cx="9.5" cy="19" r="2" fill="#333" />
+            <circle cx="18.5" cy="19" r="2" fill="#333" />
+            <rect x="6" y="25" width="4" height="3" rx="1" fill="#fff" />
+            <rect x="18" y="25" width="4" height="3" rx="1" fill="#fff" />
+            <rect x="12" y="2" width="4" height="3" rx="1" fill="#5ac8fa" />
+          </svg>
         </div>
       );
     case "fortune":
       return (
-        <div className="icon-inner" style={{ fontSize: "1.6rem" }}>
+        <div className="icon-inner" style={{ fontSize: "1.8rem" }}>
           🥠
         </div>
       );
     case "notes":
       return (
         <div className="icon-notes">
-          <div className="icon-notes-lines">
+          <div className="icon-notes-header" />
+          <div className="icon-notes-body">
             <span />
             <span />
             <span />
@@ -155,9 +155,9 @@ function AppIcon({ type }) {
       return (
         <div className="icon-wallet">
           <div className="icon-wallet-cards">
-            <span style={{ background: "#ff3b30" }} />
-            <span style={{ background: "#ff9500" }} />
-            <span style={{ background: "#007aff" }} />
+            <span className="wallet-card-1" />
+            <span className="wallet-card-2" />
+            <span className="wallet-card-3" />
           </div>
         </div>
       );
