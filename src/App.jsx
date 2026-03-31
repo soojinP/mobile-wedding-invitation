@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Cover from './pages/Cover'
 import Compatibility from './pages/Compatibility'
 import NameCompat from './pages/NameCompat'
@@ -48,8 +48,11 @@ const V2_APPS = {
 function App() {
   const [version, setVersion] = useState('v1')
   const [currentPage, setCurrentPage] = useState(0)
+  const [pageDir, setPageDir] = useState('next')
+  const [animating, setAnimating] = useState(false)
   const [v2App, setV2App] = useState(null)
   const [v2Unlocked, setV2Unlocked] = useState(false)
+  const touchStartX = useRef(null)
 
   const switchToV2 = () => {
     setVersion('v2')
@@ -63,18 +66,31 @@ function App() {
     window.scrollTo(0, 0)
   }
 
-  const goNext = () => {
-    if (currentPage < V1_PAGES.length - 1) {
-      setCurrentPage(currentPage + 1)
+  const changePage = useCallback((newPage, dir) => {
+    if (animating) return
+    if (newPage < 0 || newPage >= V1_PAGES.length) return
+    if (newPage === currentPage) return
+    setPageDir(dir)
+    setAnimating(true)
+    setTimeout(() => {
+      setCurrentPage(newPage)
       window.scrollTo(0, 0)
-    }
-  }
+      setTimeout(() => setAnimating(false), 50)
+    }, 300)
+  }, [animating, currentPage])
 
-  const goPrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1)
-      window.scrollTo(0, 0)
+  const goNext = () => changePage(currentPage + 1, 'next')
+  const goPrev = () => changePage(currentPage - 1, 'prev')
+
+  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX }
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return
+    const diff = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 60) {
+      if (diff > 0) goNext()
+      else goPrev()
     }
+    touchStartX.current = null
   }
 
   // V2 mode
@@ -105,17 +121,28 @@ function App() {
 
   // V1 mode
   const PageComponent = V1_PAGES[currentPage].component
+  const pageClass = animating
+    ? `page-exit page-exit-${pageDir}`
+    : 'page-enter'
 
   return (
-    <div className="app">
+    <div className="app newspaper" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <BgmPlayer />
-      <PageComponent onNext={goNext} onPrev={goPrev} onSwitchV2={switchToV2} />
+      <div className="newspaper-header">
+        <div className="newspaper-rule" />
+        <h1 className="newspaper-title">The Wedding Times</h1>
+        <p className="newspaper-date">2026년 5월 25일 월요일 | 제1호</p>
+        <div className="newspaper-rule" />
+      </div>
+      <div key={currentPage} className={`page-transition ${pageClass}`}>
+        <PageComponent onNext={goNext} onPrev={goPrev} onSwitchV2={switchToV2} />
+      </div>
       <Navigation
         current={currentPage}
         total={V1_PAGES.length}
         onNext={goNext}
         onPrev={goPrev}
-        onGoTo={(i) => { setCurrentPage(i); window.scrollTo(0, 0) }}
+        onGoTo={(i) => changePage(i, i > currentPage ? 'next' : 'prev')}
       />
     </div>
   )

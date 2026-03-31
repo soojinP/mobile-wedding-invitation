@@ -34,12 +34,12 @@ html, body {
 
 /* Page common */
 .page {
-  min-height: 100dvh;
+  min-height: 70dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 24px;
+  padding: 40px 24px;
   text-align: center;
 }
 
@@ -175,6 +175,84 @@ html, body {
 
 .nav .dot.active {
   background: var(--accent);
+}
+
+/* Newspaper theme */
+.newspaper {
+  background: #f5f0e8;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 100% 1.7em;
+}
+
+.newspaper-header {
+  padding: 16px 24px 0;
+  text-align: center;
+}
+
+.newspaper-title {
+  font-family: 'Georgia', 'Times New Roman', var(--serif);
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  line-height: 1.2;
+  margin: 6px 0 4px;
+}
+
+.newspaper-date {
+  font-size: 0.7rem;
+  color: #888;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.newspaper-rule {
+  height: 2px;
+  background: #1a1a1a;
+  position: relative;
+}
+
+.newspaper-rule::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #1a1a1a;
+}
+
+/* Page transition */
+.page-transition {
+  will-change: opacity, transform;
+}
+
+.page-enter {
+  animation: pageEnter 0.35s ease forwards;
+}
+
+.page-exit-next {
+  animation: pageExitLeft 0.3s ease forwards;
+}
+
+.page-exit-prev {
+  animation: pageExitRight 0.3s ease forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageExitLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-40px); }
+}
+
+@keyframes pageExitRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(40px); }
 }
 
 /* Loading spinner */

@@ -1,11 +1,11 @@
 .cover-page {
-  background: var(--bg);
-  min-height: 100dvh;
+  background: transparent;
+  min-height: 80dvh;
   justify-content: center;
 }
 
 .breaking-news {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .breaking-badge {
@@ -13,41 +13,46 @@
   background: var(--red);
   color: #fff;
   padding: 6px 16px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
 }
 
 .cover-headline {
-  font-family: var(--serif);
+  font-family: 'Georgia', 'Times New Roman', var(--serif);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.6;
   letter-spacing: -0.02em;
+  color: #1a1a1a;
 }
 
 .cover-sub {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-light);
   margin-top: 16px;
   font-style: italic;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
 }
 
 .cover-notice {
-  margin-top: 24px;
-  font-size: 0.82rem;
+  margin-top: 20px;
+  font-size: 0.8rem;
   line-height: 1.7;
   color: var(--text);
-  background: rgba(201, 169, 110, 0.08);
+  background: rgba(0,0,0,0.03);
   padding: 14px 20px;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid #1a1a1a;
+  text-align: left;
 }
 
 .cover-date {
-  margin-top: 28px;
+  margin-top: 24px;
   font-size: 0.95rem;
   line-height: 1.8;
   color: var(--text);
+  font-family: var(--serif);
 }
 
 .cover-venue {
@@ -58,7 +63,7 @@
 .cover-buttons {
   display: flex;
   gap: 12px;
-  margin-top: 40px;
+  margin-top: 36px;
 }
 
 .btn-v2 {

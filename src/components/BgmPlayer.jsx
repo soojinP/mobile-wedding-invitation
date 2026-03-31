@@ -1,42 +1,59 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './BgmPlayer.css'
 
+// Singleton audio - survives re-mounts
+let audio = null
+function getAudio() {
+  if (!audio) {
+    audio = new Audio('/bgm.mp3')
+    audio.loop = true
+    audio.volume = 0.3
+  }
+  return audio
+}
+
 export default function BgmPlayer() {
-  const audioRef = useRef(null)
-  const [playing, setPlaying] = useState(false)
-  const [firstInteraction, setFirstInteraction] = useState(false)
+  const [playing, setPlaying] = useState(() => {
+    const a = getAudio()
+    return !a.paused
+  })
 
   useEffect(() => {
+    const a = getAudio()
+
     const handleInteraction = () => {
-      if (!firstInteraction) {
-        setFirstInteraction(true)
-        if (audioRef.current) {
-          audioRef.current.volume = 0.3
-          audioRef.current.play().then(() => setPlaying(true)).catch(() => {})
-        }
+      if (a.paused) {
+        a.play().then(() => setPlaying(true)).catch(() => {})
       }
     }
     document.addEventListener('click', handleInteraction, { once: true })
-    return () => document.removeEventListener('click', handleInteraction)
-  }, [firstInteraction])
+
+    // Sync state if audio is already playing from a previous mount
+    const onPlay = () => setPlaying(true)
+    const onPause = () => setPlaying(false)
+    a.addEventListener('play', onPlay)
+    a.addEventListener('pause', onPause)
+
+    return () => {
+      document.removeEventListener('click', handleInteraction)
+      a.removeEventListener('play', onPlay)
+      a.removeEventListener('pause', onPause)
+    }
+  }, [])
 
   const toggle = (e) => {
     e.stopPropagation()
-    if (!audioRef.current) return
+    const a = getAudio()
     if (playing) {
-      audioRef.current.pause()
-      setPlaying(false)
+      a.pause()
     } else {
-      audioRef.current.play().then(() => setPlaying(true)).catch(() => {})
+      a.play().then(() => setPlaying(true)).catch(() => {})
     }
   }
 
   return (
-    <>
-      <audio ref={audioRef} src="/bgm.mp3" loop preload="auto" />
-      <button className={`bgm-btn ${playing ? 'playing' : ''}`} onClick={toggle}>
-        {playing ? '♪' : '♪'}
-      </button>
-    </>
+    <button className={`bgm-btn ${playing ? 'playing' : ''}`} onClick={toggle}>
+      {'♪'}
+    </button>
   )
 }
