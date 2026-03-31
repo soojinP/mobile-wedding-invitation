@@ -10,8 +10,8 @@
   background: #000;
 }
 
-.v2-dark .v2-app-header {
-  background: rgba(30, 30, 30, 0.6);
+.v2-dark .v2-app-top {
+  background: rgba(0, 0, 0, 0.85);
   border-bottom-color: rgba(255,255,255,0.08);
 }
 
@@ -23,15 +23,24 @@
   background: rgba(255,255,255,0.3);
 }
 
-.v2-app-header {
-  display: flex;
-  align-items: center;
-  padding: 48px 16px 10px;
+.v2-app-top {
+  flex-shrink: 0;
+  position: relative;
   background: rgba(242, 242, 247, 0.65);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-bottom: 0.5px solid rgba(255,255,255,0.3);
-  flex-shrink: 0;
+}
+
+.v2-app-top .iphone-status-bar {
+  position: relative;
+  z-index: auto;
+}
+
+.v2-app-header {
+  display: flex;
+  align-items: center;
+  padding: 0 16px 10px;
 }
 
 .v2-back-btn {
