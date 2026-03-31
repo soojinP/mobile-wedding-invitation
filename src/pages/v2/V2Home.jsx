@@ -267,12 +267,13 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 }
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
+  const callDone = useRef(!!sessionStorage.getItem('callDone'))
   const [callPhase, setCallPhase] = useState('none') // none → ringing → done
-  const callTriggered = useRef(false)
 
   useEffect(() => {
-    if (unlocked && !callTriggered.current) {
-      callTriggered.current = true
+    if (unlocked && !callDone.current) {
+      callDone.current = true
+      sessionStorage.setItem('callDone', '1')
       const t = setTimeout(() => setCallPhase('ringing'), 1000)
       return () => clearTimeout(t)
     }
@@ -280,7 +281,8 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
 
   const handleNotifTap = () => {
     onUnlock()
-    callTriggered.current = true // skip call if entered via notification
+    callDone.current = true
+    sessionStorage.setItem('callDone', '1')
     setTimeout(() => onAppClick('invite'), 100)
   }
 
