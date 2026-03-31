@@ -346,6 +346,8 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 
 let _callDone = false;
 
+const CALL_DELAY = 2500;
+
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   const [showCall, setShowCall] = useState(false);
 
@@ -353,8 +355,7 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   useEffect(() => {
     if (_callDone) return;
     _callDone = true;
-    const t = setTimeout(() => setShowCall(true), 1000);
-    return () => clearTimeout(t);
+    setTimeout(() => setShowCall(true), CALL_DELAY);
   }, []);
 
   const handleNotifTap = () => {
