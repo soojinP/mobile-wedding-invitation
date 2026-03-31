@@ -45,8 +45,33 @@ const V2_APPS = {
   gift: { title: '축의금', component: GiftApp, dark: false },
 }
 
+function VersionSelect({ onSelect }) {
+  return (
+    <div className="version-select">
+      <div className="version-select-inner">
+        <p className="version-label">창민 & 수진</p>
+        <h1 className="version-title">결혼합니다</h1>
+        <p className="version-date">2026. 05. 25 (월) 오후 1시</p>
+        <p className="version-sub">초대장 스타일을 선택해주세요</p>
+        <div className="version-buttons">
+          <button className="version-btn v1" onClick={() => onSelect('v1')}>
+            <span className="version-btn-icon">📰</span>
+            <span className="version-btn-name">신문 컨셉</span>
+            <span className="version-btn-desc">The Wedding Times</span>
+          </button>
+          <button className="version-btn v2" onClick={() => onSelect('v2')}>
+            <span className="version-btn-icon">📱</span>
+            <span className="version-btn-name">아이폰 컨셉</span>
+            <span className="version-btn-desc">iOS Style</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function App() {
-  const [version, setVersion] = useState('v1')
+  const [version, setVersion] = useState(null)
   const [currentPage, setCurrentPage] = useState(0)
   const [pageDir, setPageDir] = useState('next')
   const [animating, setAnimating] = useState(false)
@@ -54,17 +79,15 @@ function App() {
   const [v2Unlocked, setV2Unlocked] = useState(false)
   const touchStartX = useRef(null)
 
-  const switchToV2 = () => {
-    setVersion('v2')
+  const selectVersion = (v) => {
+    setVersion(v)
     setV2App(null)
-    window.scrollTo(0, 0)
-  }
-
-  const switchToV1 = () => {
-    setVersion('v1')
     setCurrentPage(0)
     window.scrollTo(0, 0)
   }
+
+  const switchToV2 = () => selectVersion('v2')
+  const switchToV1 = () => selectVersion('v1')
 
   const changePage = useCallback((newPage, dir) => {
     if (animating) return
@@ -91,6 +114,16 @@ function App() {
       else goPrev()
     }
     touchStartX.current = null
+  }
+
+  // Version select
+  if (!version) {
+    return (
+      <div className="app">
+        <BgmPlayer />
+        <VersionSelect onSelect={selectVersion} />
+      </div>
+    )
   }
 
   // V2 mode
