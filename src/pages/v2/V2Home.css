@@ -361,6 +361,43 @@
   flex-direction: column;
 }
 
+/* D-Day Widget */
+.dday-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin: 0 4px 4px;
+}
+
+.dday-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dday-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+.dday-date {
+  font-size: 0.85rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.dday-count {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
 /* App Grid */
 .app-grid {
   display: grid;

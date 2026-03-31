@@ -11,7 +11,6 @@ const APPS = [
   { id: 'fortune', iconType: 'fortune', label: '포춘쿠키', color: 'linear-gradient(135deg, #ffcc02, #ff9500)' },
   { id: 'guestbook', iconType: 'notes', label: '방명록', color: 'linear-gradient(180deg, #fffc00, #ffcc02)' },
   { id: 'gift', iconType: 'wallet', label: '축의금', color: '#1c1c1e' },
-  { id: 'music', iconType: 'music', label: 'BGM', color: 'linear-gradient(135deg, #fc3c44, #ff6482)' },
 ]
 
 function AppIcon({ type }) {
@@ -79,14 +78,6 @@ function AppIcon({ type }) {
             <span style={{background:'#ff9500'}} />
             <span style={{background:'#007aff'}} />
           </div>
-        </div>
-      )
-    case 'music':
-      return (
-        <div className="icon-inner">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path d="M20 4v14.5a3.5 3.5 0 11-2-3.16V8l-8 2v10.5a3.5 3.5 0 11-2-3.16V6l12-3v1z" fill="#fff"/>
-          </svg>
         </div>
       )
     default:
@@ -226,11 +217,30 @@ function LockScreen({ onUnlock, onNotifTap }) {
   )
 }
 
+function DdayWidget() {
+  const wedding = new Date(2026, 4, 25)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const diff = Math.ceil((wedding - today) / (1000 * 60 * 60 * 24))
+  const dday = diff === 0 ? 'D-Day' : diff > 0 ? `D-${diff}` : `D+${Math.abs(diff)}`
+
+  return (
+    <div className="dday-widget">
+      <div className="dday-left">
+        <span className="dday-label">Wedding Day</span>
+        <span className="dday-date">2026. 05. 25</span>
+      </div>
+      <div className="dday-count">{dday}</div>
+    </div>
+  )
+}
+
 function HomeScreen({ onAppClick, onSwitchV1 }) {
   return (
     <div className="home-screen">
       <StatusBar />
       <div className="home-content">
+        <DdayWidget />
         <div className="app-grid">
           {APPS.map((app) => (
             <button key={app.id} className="app-icon-btn" onClick={() => onAppClick(app.id)}>

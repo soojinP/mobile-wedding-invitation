@@ -18,7 +18,6 @@ import GalleryApp from './pages/v2/apps/GalleryApp'
 import VenueApp from './pages/v2/apps/VenueApp'
 import ShuttleApp from './pages/v2/apps/ShuttleApp'
 import GiftApp from './pages/v2/apps/GiftApp'
-import MusicApp from './pages/v2/apps/MusicApp'
 import FortuneApp from './pages/v2/apps/FortuneApp'
 import GuestbookApp from './pages/v2/apps/GuestbookApp'
 import './styles/global.css'
@@ -44,7 +43,6 @@ const V2_APPS = {
   fortune: { title: '포춘쿠키', component: FortuneApp, dark: false },
   guestbook: { title: '방명록', component: GuestbookApp, dark: false },
   gift: { title: '축의금', component: GiftApp, dark: false },
-  music: { title: 'BGM', component: MusicApp, dark: false },
 }
 
 function App() {
