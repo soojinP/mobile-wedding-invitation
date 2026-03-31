@@ -1,0 +1,112 @@
+.guestbook-compose {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.guestbook-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  font-family: var(--sans);
+  color: #000;
+  padding: 8px 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
+  background: transparent;
+}
+
+.guestbook-input::placeholder {
+  color: #c7c7cc;
+}
+
+.guestbook-textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  font-family: var(--sans);
+  color: #000;
+  padding: 8px 0;
+  min-height: 80px;
+  resize: none;
+  background: transparent;
+  line-height: 1.6;
+}
+
+.guestbook-textarea::placeholder {
+  color: #c7c7cc;
+}
+
+.guestbook-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.guestbook-submit {
+  padding: 8px 20px;
+  background: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+
+.guestbook-submit:disabled {
+  background: #c7c7cc;
+  cursor: default;
+}
+
+.guestbook-submit:active:not(:disabled) {
+  opacity: 0.7;
+}
+
+.guestbook-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guestbook-entry {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.guestbook-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.guestbook-entry-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.guestbook-entry-date {
+  font-size: 0.65rem;
+  color: #c7c7cc;
+}
+
+.guestbook-entry-msg {
+  font-size: 0.8rem;
+  color: #3c3c43;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.guestbook-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: #c7c7cc;
+  font-size: 0.85rem;
+}

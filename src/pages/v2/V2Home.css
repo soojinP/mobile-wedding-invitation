@@ -394,7 +394,165 @@
   font-size: 1.6rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   transition: transform 0.15s;
+  overflow: hidden;
+  position: relative;
 }
+
+.icon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Calendar icon */
+.icon-calendar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-cal-header {
+  background: #ff3b30;
+  color: #fff;
+  font-size: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px 0 2px;
+  letter-spacing: 0.05em;
+}
+
+.icon-cal-day {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #1c1c1e;
+}
+
+/* Calculator icon */
+.icon-calc {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 6px;
+}
+
+.icon-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  width: 100%;
+}
+
+.icon-calc-grid span {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+/* Photos icon */
+.icon-photos {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.icon-photos-flower {
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.icon-photos-flower span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50% 50% 50% 0;
+  top: 50%;
+  left: 50%;
+}
+
+.icon-photos-flower span:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg) translateY(-8px); }
+.icon-photos-flower span:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg) translateY(-8px); }
+
+.icon-photos-center {
+  width: 10px !important;
+  height: 10px !important;
+  background: #fff !important;
+  border-radius: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Notes icon */
+.icon-notes {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px 10px;
+}
+
+.icon-notes-lines {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.icon-notes-lines span {
+  height: 2px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 1px;
+}
+
+.icon-notes-lines span:nth-child(1) { width: 100%; }
+.icon-notes-lines span:nth-child(2) { width: 85%; }
+.icon-notes-lines span:nth-child(3) { width: 70%; }
+.icon-notes-lines span:nth-child(4) { width: 50%; }
+
+/* Wallet icon */
+.icon-wallet {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.icon-wallet-cards {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.icon-wallet-cards span {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.icon-wallet-cards span:nth-child(1) { top: 4px; }
+.icon-wallet-cards span:nth-child(2) { top: 14px; }
+.icon-wallet-cards span:nth-child(3) { top: 24px; }
 
 .app-label {
   font-size: 0.65rem;

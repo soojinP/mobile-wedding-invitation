@@ -1,0 +1,139 @@
+.fortune-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.fortune-cookie-wrap {
+  min-height: 140px;
+}
+
+/* Unopened cookie */
+.fortune-cookie {
+  width: 100%;
+  height: 140px;
+  background: #fff;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fortune-cookie:active {
+  transform: scale(0.95);
+}
+
+.cookie-body {
+  font-size: 3rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.cookie-label {
+  font-size: 0.65rem;
+  color: #c7c7cc;
+  font-family: var(--sans);
+}
+
+/* Cracking animation */
+.fortune-cookie.cracking {
+  animation: cookieCrack 0.6s ease forwards;
+}
+
+.fortune-cookie.cracking .cookie-body {
+  animation: cookieShake 0.3s ease 2;
+}
+
+@keyframes cookieCrack {
+  0% { transform: scale(1); opacity: 1; }
+  40% { transform: scale(1.1); opacity: 1; }
+  70% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(0.5); opacity: 0; }
+}
+
+@keyframes cookieShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+
+/* Opened - fortune paper */
+.fortune-paper {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px;
+  min-height: 140px;
+  position: relative;
+  animation: paperReveal 0.5s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes paperReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateX(20deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateX(0deg);
+  }
+}
+
+.paper-inner {
+  flex: 1;
+}
+
+.fortune-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.fortune-text {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: #3c3c43;
+}
+
+.cookie-crumbs {
+  text-align: right;
+  font-size: 0.8rem;
+  opacity: 0.3;
+  margin-top: 8px;
+}
+
+/* Complete message */
+.fortune-complete {
+  text-align: center;
+  padding: 24px;
+  animation: fadeSlideUp 0.5s ease;
+}
+
+.fortune-complete p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.fortune-complete-sub {
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: #8e8e93 !important;
+  margin-top: 4px;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

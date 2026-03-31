@@ -19,6 +19,8 @@ import VenueApp from './pages/v2/apps/VenueApp'
 import ShuttleApp from './pages/v2/apps/ShuttleApp'
 import GiftApp from './pages/v2/apps/GiftApp'
 import MusicApp from './pages/v2/apps/MusicApp'
+import FortuneApp from './pages/v2/apps/FortuneApp'
+import GuestbookApp from './pages/v2/apps/GuestbookApp'
 import './styles/global.css'
 
 const V1_PAGES = [
@@ -39,6 +41,8 @@ const V2_APPS = {
   gallery: { title: '사진', component: GalleryApp, dark: false },
   venue: { title: '오시는 길', component: VenueApp, dark: false },
   shuttle: { title: '셔틀버스', component: ShuttleApp, dark: false },
+  fortune: { title: '포춘쿠키', component: FortuneApp, dark: false },
+  guestbook: { title: '방명록', component: GuestbookApp, dark: false },
   gift: { title: '축의금', component: GiftApp, dark: false },
   music: { title: 'BGM', component: MusicApp, dark: false },
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './NameApp.css'
 
 const STROKE_MAP = {
@@ -49,75 +49,149 @@ function calculate() {
   return { rows, result: cur.join('') }
 }
 
-// 계산 과정을 하나씩 보여줄 수식 생성
-function getExpressions(rows) {
-  const exprs = []
-  for (let r = 0; r < rows.length - 1; r++) {
-    for (let i = 0; i < rows[r].length - 1; i++) {
-      exprs.push({
-        a: rows[r][i],
-        b: rows[r][i + 1],
-        result: rows[r + 1][i],
-      })
-    }
-  }
-  return exprs
-}
+const NAMES_INTERLEAVED = ['이','박','창','수','민','진']
 
 export default function NameApp() {
   const { rows, result } = calculate()
-  const expressions = getExpressions(rows)
-  const [phase, setPhase] = useState('ready') // ready, calculating, done
+  // phases: ready, typing, strokes, calculating, boom, done
+  const [phase, setPhase] = useState('ready')
+  const [typedIdx, setTypedIdx] = useState(0)
   const [displayText, setDisplayText] = useState('0')
-  const [exprIdx, setExprIdx] = useState(0)
-  const [history, setHistory] = useState([])
+  const [visibleRows, setVisibleRows] = useState(0)
+  const [shaking, setShaking] = useState(false)
+  const [sparkles, setSparkles] = useState([])
+  const historyRef = useRef(null)
 
   const startCalc = () => {
-    setPhase('calculating')
-    setExprIdx(0)
-    setHistory([])
-    setDisplayText('0')
+    setPhase('typing')
+    setTypedIdx(0)
+    setDisplayText('')
   }
 
+  // Phase: typing names one by one
   useEffect(() => {
-    if (phase !== 'calculating') return
-    if (exprIdx >= expressions.length) {
-      setDisplayText(result + '%')
-      setPhase('done')
+    if (phase !== 'typing') return
+    if (typedIdx >= NAMES_INTERLEAVED.length) {
+      setTimeout(() => {
+        setPhase('strokes')
+        setDisplayText(rows[0].join(' '))
+      }, 400)
       return
     }
-    const expr = expressions[exprIdx]
-    const line = `${expr.a} + ${expr.b} = ${(expr.a + expr.b)} → ${expr.result}`
-
     const timer = setTimeout(() => {
-      setDisplayText(String(expr.result))
-      setHistory((h) => [...h, line])
-      setExprIdx((i) => i + 1)
-    }, 250)
+      setDisplayText((d) => d + NAMES_INTERLEAVED[typedIdx])
+      setTypedIdx((i) => i + 1)
+    }, 300)
     return () => clearTimeout(timer)
-  }, [phase, exprIdx, expressions, result])
+  }, [phase, typedIdx, rows])
+
+  // Phase: show stroke counts then start calculating
+  useEffect(() => {
+    if (phase !== 'strokes') return
+    const timer = setTimeout(() => {
+      setPhase('calculating')
+      setVisibleRows(1)
+    }, 1200)
+    return () => clearTimeout(timer)
+  }, [phase])
+
+  // Phase: reveal rows one by one
+  useEffect(() => {
+    if (phase !== 'calculating') return
+    if (visibleRows >= rows.length) {
+      setTimeout(() => {
+        setPhase('boom')
+        setDisplayText(result)
+        setShaking(true)
+        setTimeout(() => setShaking(false), 600)
+        // create sparkles
+        const newSparkles = Array.from({ length: 12 }, (_, i) => ({
+          id: i,
+          x: 30 + Math.random() * 40,
+          y: 20 + Math.random() * 30,
+          delay: Math.random() * 0.5,
+          size: 8 + Math.random() * 16,
+        }))
+        setSparkles(newSparkles)
+        setTimeout(() => {
+          setPhase('done')
+          setSparkles([])
+        }, 2000)
+      }, 400)
+      return
+    }
+    const timer = setTimeout(() => {
+      setDisplayText(rows[visibleRows].join(' '))
+      setVisibleRows((v) => v + 1)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [phase, visibleRows, rows, result])
+
+  const reset = () => {
+    setPhase('ready')
+    setDisplayText('0')
+    setVisibleRows(0)
+    setTypedIdx(0)
+    setSparkles([])
+  }
 
   return (
-    <div className="calc-app">
+    <div className={`calc-app ${shaking ? 'calc-shake' : ''}`}>
+      {/* Sparkle particles */}
+      {sparkles.map((s) => (
+        <div
+          key={s.id}
+          className="calc-sparkle"
+          style={{
+            left: `${s.x}%`,
+            top: `${s.y}%`,
+            animationDelay: `${s.delay}s`,
+            width: s.size,
+            height: s.size,
+          }}
+        />
+      ))}
+
       {/* Display */}
-      <div className="calc-display">
-        <div className="calc-history">
-          {phase === 'ready' && (
-            <div className="calc-names">
-              <span>이창민</span>
-              <span className="calc-x">x</span>
-              <span>박수진</span>
-            </div>
-          )}
-          {history.map((h, i) => (
-            <div key={i} className="calc-history-line">{h}</div>
-          ))}
+      <div className="calc-display" ref={historyRef}>
+        {phase === 'ready' && (
+          <div className="calc-names">
+            <span>이창민</span>
+            <span className="calc-x">x</span>
+            <span>박수진</span>
+          </div>
+        )}
+
+        {(phase === 'typing') && (
+          <div className="calc-typing">
+            <span>{displayText}</span>
+            <span className="calc-cursor">|</span>
+          </div>
+        )}
+
+        {(phase === 'strokes' || phase === 'calculating') && (
+          <div className="calc-pyramid">
+            {rows.slice(0, visibleRows).map((row, ri) => (
+              <div key={ri} className="calc-pyramid-row" style={{ animationDelay: `${ri * 0.1}s` }}>
+                {row.map((n, ni) => (
+                  <span
+                    key={ni}
+                    className={`calc-pyramid-cell ${ri === rows.length - 1 ? 'final-cell' : ''}`}
+                  >
+                    {n}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className={`calc-result ${phase === 'done' || phase === 'boom' ? 'final' : ''} ${phase === 'boom' ? 'boom' : ''}`}>
+          {phase === 'done' ? result + '%' : displayText}
         </div>
-        <div className={`calc-result ${phase === 'done' ? 'final' : ''}`}>
-          {displayText}
-        </div>
+
         {phase === 'done' && (
-          <div className="calc-comment">
+          <div className="calc-comment calc-comment-animate">
             {Number(result) >= 80 ? '이 정도면 결혼감입니다' : '나쁘지 않은 수치입니다'}
           </div>
         )}
@@ -132,15 +206,15 @@ export default function NameApp() {
           <button className="calc-key op" disabled>/</button>
         </div>
         <div className="calc-row">
-          <button className="calc-key">이</button>
-          <button className="calc-key">창</button>
-          <button className="calc-key">민</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>이</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>창</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>민</button>
           <button className="calc-key op" disabled>x</button>
         </div>
         <div className="calc-row">
-          <button className="calc-key">박</button>
-          <button className="calc-key">수</button>
-          <button className="calc-key">진</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>박</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>수</button>
+          <button className="calc-key" disabled={phase !== 'ready'}>진</button>
           <button className="calc-key op" disabled>-</button>
         </div>
         <div className="calc-row">
@@ -154,7 +228,7 @@ export default function NameApp() {
           <button className="calc-key" disabled>.</button>
           <button
             className={`calc-key eq ${phase === 'ready' ? 'pulse' : ''}`}
-            onClick={phase === 'ready' ? startCalc : phase === 'done' ? () => { setPhase('ready'); setHistory([]); setDisplayText('0') } : undefined}
+            onClick={phase === 'ready' ? startCalc : phase === 'done' ? reset : undefined}
           >
             {phase === 'done' ? 'C' : '='}
           </button>

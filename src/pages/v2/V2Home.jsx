@@ -2,15 +2,97 @@ import { useState, useEffect, useRef } from 'react'
 import './V2Home.css'
 
 const APPS = [
-  { id: 'invite', icon: '💌', label: '초대장', color: '#ff6b6b' },
-  { id: 'compat', icon: '💕', label: '궁합', color: '#c44dff' },
-  { id: 'name', icon: '✏️', label: '이름궁합', color: '#ff9f43' },
-  { id: 'gallery', icon: '📸', label: '사진', color: '#0abde3' },
-  { id: 'venue', icon: '🗺', label: '오시는 길', color: '#10ac84' },
-  { id: 'shuttle', icon: '🚌', label: '셔틀버스', color: '#5f27cd' },
-  { id: 'gift', icon: '💰', label: '축의금', color: '#ee5a24' },
-  { id: 'music', icon: '🎵', label: 'BGM', color: '#e84393' },
+  { id: 'invite', iconType: 'calendar', label: '초대장', color: '#fff' },
+  { id: 'compat', iconType: 'hearts', label: '궁합', color: 'linear-gradient(135deg, #ff6b9d, #c44dff)' },
+  { id: 'name', iconType: 'calc', label: '이름궁합', color: '#1c1c1e' },
+  { id: 'gallery', iconType: 'photos', label: '사진', color: '#fff' },
+  { id: 'venue', iconType: 'maps', label: '오시는 길', color: 'linear-gradient(135deg, #4cd964, #5ac8fa)' },
+  { id: 'shuttle', iconType: 'transit', label: '셔틀', color: 'linear-gradient(180deg, #007aff, #5856d6)' },
+  { id: 'fortune', iconType: 'fortune', label: '포춘쿠키', color: 'linear-gradient(135deg, #ffcc02, #ff9500)' },
+  { id: 'guestbook', iconType: 'notes', label: '방명록', color: 'linear-gradient(180deg, #fffc00, #ffcc02)' },
+  { id: 'gift', iconType: 'wallet', label: '축의금', color: '#1c1c1e' },
+  { id: 'music', iconType: 'music', label: 'BGM', color: 'linear-gradient(135deg, #fc3c44, #ff6482)' },
 ]
+
+function AppIcon({ type }) {
+  switch (type) {
+    case 'calendar':
+      return (
+        <div className="icon-calendar">
+          <div className="icon-cal-header">월요일</div>
+          <div className="icon-cal-day">25</div>
+        </div>
+      )
+    case 'hearts':
+      return <div className="icon-inner">💕</div>
+    case 'calc':
+      return (
+        <div className="icon-calc">
+          <div className="icon-calc-grid">
+            <span style={{background:'#a5a5a5'}} /><span style={{background:'#a5a5a5'}} /><span style={{background:'#ff9f0a'}} />
+            <span style={{background:'#333'}} /><span style={{background:'#333'}} /><span style={{background:'#ff9f0a'}} />
+            <span style={{background:'#333'}} /><span style={{background:'#333'}} /><span style={{background:'#ff9f0a'}} />
+          </div>
+        </div>
+      )
+    case 'photos':
+      return (
+        <div className="icon-photos">
+          <div className="icon-photos-flower">
+            <span style={{background:'#ff3b30'}} />
+            <span style={{background:'#ff9500'}} />
+            <span style={{background:'#ffcc00'}} />
+            <span style={{background:'#4cd964'}} />
+            <span style={{background:'#5ac8fa'}} />
+            <span style={{background:'#007aff'}} />
+            <span style={{background:'#5856d6'}} />
+            <span style={{background:'#ff2d55'}} />
+            <span className="icon-photos-center" />
+          </div>
+        </div>
+      )
+    case 'maps':
+      return (
+        <div className="icon-inner">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 4l-2 8-8 2 8 2 2 8 2-8 8-2-8-2z" fill="#fff" opacity="0.9"/>
+          </svg>
+        </div>
+      )
+    case 'transit':
+      return <div className="icon-inner" style={{fontSize:'1.4rem',color:'#fff'}}>🚌</div>
+    case 'fortune':
+      return <div className="icon-inner" style={{fontSize:'1.6rem'}}>🥠</div>
+    case 'notes':
+      return (
+        <div className="icon-notes">
+          <div className="icon-notes-lines">
+            <span /><span /><span /><span />
+          </div>
+        </div>
+      )
+    case 'wallet':
+      return (
+        <div className="icon-wallet">
+          <div className="icon-wallet-cards">
+            <span style={{background:'#ff3b30'}} />
+            <span style={{background:'#ff9500'}} />
+            <span style={{background:'#007aff'}} />
+          </div>
+        </div>
+      )
+    case 'music':
+      return (
+        <div className="icon-inner">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M20 4v14.5a3.5 3.5 0 11-2-3.16V8l-8 2v10.5a3.5 3.5 0 11-2-3.16V6l12-3v1z" fill="#fff"/>
+          </svg>
+        </div>
+      )
+    default:
+      return null
+  }
+}
 
 function StatusBar() {
   const [time, setTime] = useState('')
@@ -153,7 +235,7 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
           {APPS.map((app) => (
             <button key={app.id} className="app-icon-btn" onClick={() => onAppClick(app.id)}>
               <div className="app-icon" style={{ background: app.color }}>
-                <span>{app.icon}</span>
+                <AppIcon type={app.iconType} />
               </div>
               <span className="app-label">{app.label}</span>
             </button>
