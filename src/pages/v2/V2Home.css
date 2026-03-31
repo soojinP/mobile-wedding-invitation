@@ -151,9 +151,8 @@
   transition: opacity 0.4s, transform 0.4s;
 }
 
-.lock-screen.swiping {
-  opacity: 0;
-  transform: scale(1.1);
+.lock-screen.unlocking {
+  pointer-events: none;
 }
 
 .lock-content {
@@ -229,9 +228,94 @@
   color: rgba(255,255,255,0.7);
 }
 
+/* Notification tap */
+.lock-notification {
+  cursor: pointer;
+}
+
+.notif-card:active {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Now Playing widget */
+.lock-now-playing {
+  width: 100%;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.now-playing-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.now-playing-art {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.now-playing-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.now-playing-title {
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.now-playing-artist {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.now-playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.now-playing-bars span {
+  width: 3px;
+  background: #fff;
+  border-radius: 1px;
+  animation: eqBar 0.8s ease-in-out infinite;
+}
+
+.now-playing-bars span:nth-child(1) { height: 8px; animation-delay: 0s; }
+.now-playing-bars span:nth-child(2) { height: 14px; animation-delay: 0.15s; }
+.now-playing-bars span:nth-child(3) { height: 6px; animation-delay: 0.3s; }
+.now-playing-bars span:nth-child(4) { height: 12px; animation-delay: 0.45s; }
+
+@keyframes eqBar {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+}
+
 /* Swipe indicator */
 .lock-swipe {
   padding-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 .swipe-bar {
@@ -239,6 +323,11 @@
   height: 5px;
   background: rgba(255,255,255,0.4);
   border-radius: 3px;
+}
+
+.swipe-text {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.4);
   animation: swipePulse 2s ease-in-out infinite;
 }
 

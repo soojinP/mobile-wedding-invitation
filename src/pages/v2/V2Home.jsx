@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './V2Home.css'
 
 const APPS = [
@@ -43,9 +43,12 @@ function StatusBar() {
   )
 }
 
-function LockScreen({ onUnlock }) {
+function LockScreen({ onUnlock, onNotifTap }) {
   const [time, setTime] = useState({ h: '', m: '' })
-  const [swiping, setSwiping] = useState(false)
+  const [offsetY, setOffsetY] = useState(0)
+  const [unlocking, setUnlocking] = useState(false)
+  const touchStartY = useRef(null)
+  const screenRef = useRef(null)
 
   useEffect(() => {
     const update = () => {
@@ -60,14 +63,68 @@ function LockScreen({ onUnlock }) {
     return () => clearInterval(interval)
   }, [])
 
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY
+  }
+
+  const handleTouchMove = (e) => {
+    if (touchStartY.current === null) return
+    const diff = touchStartY.current - e.touches[0].clientY
+    if (diff > 0) {
+      setOffsetY(Math.min(diff, 300))
+    }
+  }
+
+  const handleTouchEnd = () => {
+    if (offsetY > 120) {
+      setUnlocking(true)
+      setTimeout(onUnlock, 400)
+    } else {
+      setOffsetY(0)
+    }
+    touchStartY.current = null
+  }
+
+  const handleClick = () => {
+    setUnlocking(true)
+    setTimeout(onUnlock, 400)
+  }
+
+  const progress = Math.min(offsetY / 200, 1)
+  const transform = unlocking
+    ? 'translateY(-100%)'
+    : `translateY(${-offsetY}px)`
+  const opacity = unlocking ? 0 : 1 - progress * 0.3
+
   return (
-    <div className={`lock-screen ${swiping ? 'swiping' : ''}`} onClick={() => { setSwiping(true); setTimeout(onUnlock, 400) }}>
+    <div
+      ref={screenRef}
+      className={`lock-screen ${unlocking ? 'unlocking' : ''}`}
+      style={{ transform, opacity, transition: unlocking || offsetY === 0 ? 'transform 0.4s ease, opacity 0.4s ease' : 'none' }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleClick}
+    >
       <StatusBar />
       <div className="lock-content">
         <div className="lock-date">5월 25일 월요일</div>
         <div className="lock-time">{time.h}:{time.m}</div>
 
-        <div className="lock-notification">
+        <div className="lock-now-playing">
+          <div className="now-playing-card">
+            <div className="now-playing-art"><span>🎵</span></div>
+            <div className="now-playing-info">
+              <div className="now-playing-title">Welcome to Our Show</div>
+              <div className="now-playing-artist">O P Baron</div>
+            </div>
+            <div className="now-playing-bars">
+              <span /><span /><span /><span />
+            </div>
+          </div>
+        </div>
+
+        <div className="lock-notification" onClick={(e) => { e.stopPropagation(); onNotifTap() }}>
           <div className="notif-card">
             <div className="notif-header">
               <span className="notif-icon">💌</span>
@@ -81,6 +138,7 @@ function LockScreen({ onUnlock }) {
       </div>
       <div className="lock-swipe">
         <div className="swipe-bar" />
+        <span className="swipe-text">위로 스와이프</span>
       </div>
     </div>
   )
@@ -118,11 +176,16 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 export default function V2Home({ onSwitchV1, onAppClick }) {
   const [unlocked, setUnlocked] = useState(false)
 
+  const handleNotifTap = () => {
+    setUnlocked(true)
+    setTimeout(() => onAppClick('invite'), 100)
+  }
+
   return (
     <div className="iphone-frame">
       <div className="iphone-body">
         {!unlocked ? (
-          <LockScreen onUnlock={() => setUnlocked(true)} />
+          <LockScreen onUnlock={() => setUnlocked(true)} onNotifTap={handleNotifTap} />
         ) : (
           <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} />
         )}

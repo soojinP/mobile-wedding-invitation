@@ -80,6 +80,7 @@ function App() {
       const AppContent = V2_APPS[v2App].component
       return (
         <div className="app">
+          <BgmPlayer />
           <V2AppShell title={V2_APPS[v2App].title} onBack={() => setV2App(null)}>
             <AppContent />
           </V2AppShell>
@@ -88,6 +89,7 @@ function App() {
     }
     return (
       <div className="app">
+        <BgmPlayer />
         <V2Home onSwitchV1={switchToV1} onAppClick={(id) => setV2App(id)} />
       </div>
     )
