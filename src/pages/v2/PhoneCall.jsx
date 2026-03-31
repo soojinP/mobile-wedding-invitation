@@ -1,23 +1,34 @@
 import { useState, useEffect, useRef } from 'react'
 import './PhoneCall.css'
 
-const SCRIPT = [
-  { delay: 800, text: '여보세요~?' },
-  { delay: 1200, text: '아 {name}님이시구나!' },
-  { delay: 1800, text: '다름이 아니라...' },
-  { delay: 1200, text: '저희 결혼합니다!!! 🎉' },
-  { delay: 2000, text: '2026년 5월 25일 월요일 오후 1시' },
-  { delay: 1500, text: '연세대학교 동문회관이요' },
-  { delay: 1800, text: '대체공휴일이라 쉬는 날이에요 ㅎㅎ' },
-  { delay: 1500, text: '{name}님 꼭 와주셔야 해요!!' },
-  { delay: 1500, text: '밥은 맛있을 예정입니다 👀' },
-  { delay: 1200, text: '그럼 그날 봐요~! 💕' },
+const BASE_SCRIPT = [
+  { delay: 600, text: '여보세요~?' },
+  { delay: 900, text: '아 {name}님이시구나!' },
+  { delay: 1200, text: '다름이 아니라...' },
+  { delay: 900, text: '저희 결혼합니다!!! 🎉' },
+  { delay: 1200, text: '2026년 5월 25일 월요일 오후 1시' },
+  { delay: 1000, text: '연세대학교 동문회관이요' },
+  { delay: 1200, text: '대체공휴일이라 쉬는 날이에요 ㅎㅎ' },
+  { delay: 1000, text: '{name}님 꼭 와주셔야 해요!!' },
+  { delay: 1000, text: '밥은 맛있을 예정입니다 👀' },
+  { delay: 900, text: '그럼 그날 봐요~! 💕' },
 ]
+
+const SPECIAL_NAMES = ['설다빈', '김견리']
+
+function getScript(name) {
+  const trimmed = name.trim()
+  if (SPECIAL_NAMES.includes(trimmed)) {
+    return [...BASE_SCRIPT, { delay: 800, text: '견다박 뭉쳐!! 🔥' }]
+  }
+  return BASE_SCRIPT
+}
 
 export default function PhoneCall({ onEnd }) {
   const [phase, setPhase] = useState('ringing') // ringing → connected → name → talking → ended
   const [guestName, setGuestName] = useState('')
   const [messages, setMessages] = useState([])
+  const [script, setScript] = useState(BASE_SCRIPT)
   const [scriptIdx, setScriptIdx] = useState(0)
   const [callTime, setCallTime] = useState(0)
   const [nameSubmitted, setNameSubmitted] = useState(false)
@@ -33,18 +44,18 @@ export default function PhoneCall({ onEnd }) {
   // Script progression
   useEffect(() => {
     if (phase !== 'talking') return
-    if (scriptIdx >= SCRIPT.length) {
-      const t = setTimeout(() => setPhase('ended'), 1500)
+    if (scriptIdx >= script.length) {
+      const t = setTimeout(() => setPhase('ended'), 1200)
       return () => clearTimeout(t)
     }
-    const { delay, text } = SCRIPT[scriptIdx]
+    const { delay, text } = script[scriptIdx]
     const t = setTimeout(() => {
       const name = guestName.trim() || '하객'
       setMessages(prev => [...prev, text.replace(/{name}/g, name)])
       setScriptIdx(i => i + 1)
     }, delay)
     return () => clearTimeout(t)
-  }, [phase, scriptIdx, guestName])
+  }, [phase, scriptIdx, guestName, script])
 
   // Auto-scroll messages
   useEffect(() => {
@@ -54,13 +65,13 @@ export default function PhoneCall({ onEnd }) {
   // End screen auto-dismiss
   useEffect(() => {
     if (phase !== 'ended') return
-    const t = setTimeout(onEnd, 2500)
+    const t = setTimeout(onEnd, 1800)
     return () => clearTimeout(t)
   }, [phase, onEnd])
 
   const answerCall = () => {
     setPhase('connected')
-    setTimeout(() => setPhase('name'), 600)
+    setTimeout(() => setPhase('name'), 400)
   }
 
   const declineCall = () => {
@@ -69,8 +80,9 @@ export default function PhoneCall({ onEnd }) {
 
   const submitName = () => {
     if (!guestName.trim()) return
+    setScript(getScript(guestName))
     setNameSubmitted(true)
-    setTimeout(() => setPhase('talking'), 500)
+    setTimeout(() => setPhase('talking'), 400)
   }
 
   const formatTime = (s) => {

@@ -273,7 +273,7 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   useEffect(() => {
     if (unlocked && !callTriggered.current) {
       callTriggered.current = true
-      const t = setTimeout(() => setCallPhase('ringing'), 2000)
+      const t = setTimeout(() => setCallPhase('ringing'), 1000)
       return () => clearTimeout(t)
     }
   }, [unlocked])
