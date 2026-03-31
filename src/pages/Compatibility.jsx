@@ -9,7 +9,6 @@ const CATEGORIES = [
     bride: 'INTP',
     score: 95,
     grade: 'S',
-    color: '#6c5ce7',
     description: '논쟁을 사랑하는 남자 x 논리로 끝장보는 여자',
     details: [
       'NT 유형끼리 만나면 대화가 끊이질 않음',
@@ -25,7 +24,6 @@ const CATEGORIES = [
     bride: 'B형',
     score: 88,
     grade: 'A',
-    color: '#e17055',
     description: '포용력 甲 남자 x 자유로운 영혼의 여자',
     details: [
       'O형 남자의 넓은 품이 B형 여자의 자유를 감싸줌',
@@ -41,7 +39,6 @@ const CATEGORIES = [
     bride: '돼지띠 (95)',
     score: 82,
     grade: 'A',
-    color: '#00b894',
     description: '영리한 원숭이 x 복덩이 돼지',
     details: [
       '원숭이의 재치와 돼지의 순수함이 만나면 웃음이 끊이지 않음',
@@ -57,7 +54,6 @@ const CATEGORIES = [
     bride: '황소자리 (4/25)',
     score: 85,
     grade: 'A',
-    color: '#0984e3',
     description: '집순이 게 x 고집쟁이 소',
     details: [
       '둘 다 안정적인 관계를 추구 → 바람 걱정 제로',
@@ -73,7 +69,6 @@ const CATEGORIES = [
     bride: '둘째',
     score: 90,
     grade: 'S',
-    color: '#fdcb6e',
     description: '책임감 만렙 장남 x 눈치 만렙 둘째',
     details: [
       '첫째의 리더십 + 둘째의 유연함 = 역할 분담 완벽',
@@ -146,31 +141,37 @@ export default function Compatibility({ onNext }) {
 
   return (
     <div className="page compat-page">
-      <h2>커플 궁합 분석</h2>
-      <p className="compat-sub">이창민 x 박수진, 과연 얼마나 맞을까?</p>
+      <div className="news-section-label">제2면 | 사회</div>
+      <h2>커플 궁합 종합 분석</h2>
+      <p className="compat-sub">본지 기자단, 이창민-박수진 커플 정밀 조사 결과 발표</p>
 
       {phase === 'idle' && (
         <div className="compat-profiles fade-in">
-          <div className="profile">
-            <div className="profile-name">이창민</div>
-            <div className="profile-tags">
-              <span>ENTP</span>
-              <span>O형</span>
-              <span>92년생</span>
-              <span>첫째</span>
+          <div className="news-columns">
+            <div className="news-col">
+              <div className="profile">
+                <div className="profile-name">이창민 (34)</div>
+                <div className="profile-tags">
+                  <span>ENTP</span>
+                  <span>O형</span>
+                  <span>92년생</span>
+                  <span>첫째</span>
+                </div>
+              </div>
+            </div>
+            <div className="news-col">
+              <div className="profile">
+                <div className="profile-name">박수진 (31)</div>
+                <div className="profile-tags">
+                  <span>INTP</span>
+                  <span>B형</span>
+                  <span>95년생</span>
+                  <span>둘째</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="profile-vs">VS</div>
-          <div className="profile">
-            <div className="profile-name">박수진</div>
-            <div className="profile-tags">
-              <span>INTP</span>
-              <span>B형</span>
-              <span>95년생</span>
-              <span>둘째</span>
-            </div>
-          </div>
-          <button className="btn btn-solid" onClick={startAnalysis} style={{ marginTop: 40 }}>
+          <button className="btn btn-solid" onClick={startAnalysis} style={{ marginTop: 32 }}>
             궁합 분석 시작
           </button>
         </div>
@@ -193,37 +194,36 @@ export default function Compatibility({ onNext }) {
             <div className="total-number">{totalScore}<span>점</span></div>
             <div className="total-label">종합 궁합</div>
             <div className="total-comment">
-              {totalScore >= 85 ? '이 정도면 그냥 결혼하셔야죠' : '나쁘지 않은데요?'}
+              {totalScore >= 85 ? '"이 정도면 그냥 결혼하셔야죠" — 본지 궁합 전문기자' : '"나쁘지 않은데요?" — 본지 궁합 전문기자'}
             </div>
           </div>
 
-          {CATEGORIES.map((cat, i) => (
-            i < revealedCount && (
-              <div key={cat.id} className="cat-card fade-in" style={{ '--accent-color': cat.color }}>
-                <div className="cat-header">
-                  <span className="cat-label" style={{ background: cat.color }}>{cat.label}</span>
-                  <div className="cat-matchup">
-                    <span>{cat.groom}</span>
-                    <span className="cat-x">x</span>
-                    <span>{cat.bride}</span>
+          <div className="news-articles">
+            {CATEGORIES.map((cat, i) => (
+              i < revealedCount && (
+                <article key={cat.id} className="news-article fade-in">
+                  <div className="article-header">
+                    <span className="article-section">{cat.label}</span>
+                    <span className="article-score">{cat.score}점 ({cat.grade})</span>
                   </div>
-                </div>
-                <div className="cat-score-row">
-                  <div className="cat-bar-bg">
-                    <div className="cat-bar-fill" style={{ width: `${cat.score}%`, background: cat.color }} />
+                  <h3 className="article-headline">{cat.description}</h3>
+                  <div className="article-matchup">
+                    {cat.groom} vs {cat.bride}
                   </div>
-                  <span className="cat-score">{cat.score}점</span>
-                  <span className="cat-grade" style={{ color: cat.color }}>{cat.grade}</span>
-                </div>
-                <p className="cat-desc">{cat.description}</p>
-                <ul className="cat-details">
-                  {cat.details.map((d, j) => (
-                    <li key={j}>{d}</li>
-                  ))}
-                </ul>
-              </div>
-            )
-          ))}
+                  <div className="article-bar">
+                    <div className="article-bar-fill" style={{ width: `${cat.score}%` }} />
+                  </div>
+                  <div className="article-body">
+                    {cat.details.map((d, j) => (
+                      <p key={j} className={j === cat.details.length - 1 ? 'article-conclusion' : ''}>
+                        {d}
+                      </p>
+                    ))}
+                  </div>
+                </article>
+              )
+            ))}
+          </div>
 
           {revealedCount >= CATEGORIES.length && (
             <button className="btn fade-in-delay" onClick={onNext} style={{ marginTop: 32 }}>

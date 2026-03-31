@@ -104,6 +104,81 @@
   word-break: break-word;
 }
 
+.guestbook-entry-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.guestbook-action-btn {
+  background: none;
+  border: none;
+  font-size: 0.7rem;
+  color: #8e8e93;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--sans);
+}
+
+.guestbook-action-btn:active {
+  color: #007aff;
+}
+
+.guestbook-edit-form {
+  margin-top: 8px;
+}
+
+.guestbook-edit-form .guestbook-textarea {
+  min-height: 60px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
+}
+
+.guestbook-edit-form .guestbook-input {
+  margin-top: 4px;
+}
+
+.guestbook-edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.guestbook-btn-sm {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--sans);
+  background: #e5e5ea;
+  color: #3c3c43;
+}
+
+.guestbook-btn-sm.primary {
+  background: #007aff;
+  color: #fff;
+}
+
+.guestbook-btn-sm.danger {
+  background: #ff3b30;
+  color: #fff;
+}
+
+.guestbook-error {
+  font-size: 0.7rem;
+  color: #ff3b30;
+  margin-top: 4px;
+}
+
+.guestbook-delete-msg {
+  font-size: 0.8rem;
+  color: #ff3b30;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
 .guestbook-empty {
   text-align: center;
   padding: 32px 16px;
