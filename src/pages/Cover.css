@@ -54,3 +54,20 @@
   font-size: 0.85rem;
   color: var(--text-light);
 }
+
+.cover-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.btn-v2 {
+  border-color: #333;
+  color: #333;
+  background: transparent;
+}
+
+.btn-v2:hover {
+  background: #333;
+  color: #fff;
+}

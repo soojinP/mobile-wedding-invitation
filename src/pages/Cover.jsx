@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Cover.css'
 
-export default function Cover({ onNext }) {
+export default function Cover({ onNext, onSwitchV2 }) {
   const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
@@ -38,9 +38,14 @@ export default function Cover({ onNext }) {
             <span className="cover-venue">연세대학교 동문회관</span>
           </p>
 
-          <button className="btn fade-in-delay-3" onClick={onNext} style={{ marginTop: 40 }}>
-            청첩장 보기
-          </button>
+          <div className="cover-buttons fade-in-delay-3">
+            <button className="btn" onClick={onNext}>
+              청첩장 보기
+            </button>
+            <button className="btn btn-v2" onClick={onSwitchV2}>
+              V2로 보기
+            </button>
+          </div>
         </>
       )}
     </div>

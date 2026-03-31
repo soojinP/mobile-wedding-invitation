@@ -9,9 +9,19 @@ import Shuttle from './pages/Shuttle'
 import GiftMoney from './pages/GiftMoney'
 import Navigation from './components/Navigation'
 import BgmPlayer from './components/BgmPlayer'
+import V2Home from './pages/v2/V2Home'
+import V2AppShell from './pages/v2/V2AppShell'
+import InviteApp from './pages/v2/apps/InviteApp'
+import CompatApp from './pages/v2/apps/CompatApp'
+import NameApp from './pages/v2/apps/NameApp'
+import GalleryApp from './pages/v2/apps/GalleryApp'
+import VenueApp from './pages/v2/apps/VenueApp'
+import ShuttleApp from './pages/v2/apps/ShuttleApp'
+import GiftApp from './pages/v2/apps/GiftApp'
+import MusicApp from './pages/v2/apps/MusicApp'
 import './styles/global.css'
 
-const PAGES = [
+const V1_PAGES = [
   { id: 'cover', component: Cover },
   { id: 'compat', component: Compatibility },
   { id: 'name', component: NameCompat },
@@ -22,11 +32,36 @@ const PAGES = [
   { id: 'gift', component: GiftMoney },
 ]
 
+const V2_APPS = {
+  invite: { title: '초대장', component: InviteApp },
+  compat: { title: '궁합', component: CompatApp },
+  name: { title: '이름궁합', component: NameApp },
+  gallery: { title: '사진', component: GalleryApp },
+  venue: { title: '오시는 길', component: VenueApp },
+  shuttle: { title: '셔틀버스', component: ShuttleApp },
+  gift: { title: '축의금', component: GiftApp },
+  music: { title: 'BGM', component: MusicApp },
+}
+
 function App() {
+  const [version, setVersion] = useState('v1')
   const [currentPage, setCurrentPage] = useState(0)
+  const [v2App, setV2App] = useState(null)
+
+  const switchToV2 = () => {
+    setVersion('v2')
+    setV2App(null)
+    window.scrollTo(0, 0)
+  }
+
+  const switchToV1 = () => {
+    setVersion('v1')
+    setCurrentPage(0)
+    window.scrollTo(0, 0)
+  }
 
   const goNext = () => {
-    if (currentPage < PAGES.length - 1) {
+    if (currentPage < V1_PAGES.length - 1) {
       setCurrentPage(currentPage + 1)
       window.scrollTo(0, 0)
     }
@@ -39,15 +74,35 @@ function App() {
     }
   }
 
-  const PageComponent = PAGES[currentPage].component
+  // V2 mode
+  if (version === 'v2') {
+    if (v2App && V2_APPS[v2App]) {
+      const AppContent = V2_APPS[v2App].component
+      return (
+        <div className="app">
+          <V2AppShell title={V2_APPS[v2App].title} onBack={() => setV2App(null)}>
+            <AppContent />
+          </V2AppShell>
+        </div>
+      )
+    }
+    return (
+      <div className="app">
+        <V2Home onSwitchV1={switchToV1} onAppClick={(id) => setV2App(id)} />
+      </div>
+    )
+  }
+
+  // V1 mode
+  const PageComponent = V1_PAGES[currentPage].component
 
   return (
     <div className="app">
       <BgmPlayer />
-      <PageComponent onNext={goNext} onPrev={goPrev} />
+      <PageComponent onNext={goNext} onPrev={goPrev} onSwitchV2={switchToV2} />
       <Navigation
         current={currentPage}
-        total={PAGES.length}
+        total={V1_PAGES.length}
         onNext={goNext}
         onPrev={goPrev}
         onGoTo={(i) => { setCurrentPage(i); window.scrollTo(0, 0) }}

@@ -1,0 +1,32 @@
+.ios-compat-score {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.ios-compat-score span {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #8e8e93;
+}
+
+.ios-compat-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.ios-compat-bar {
+  height: 6px;
+  background: #f2f2f7;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ios-compat-bar div {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
