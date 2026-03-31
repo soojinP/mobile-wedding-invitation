@@ -116,10 +116,10 @@ export default function PhoneCall({ onEnd }) {
         <div className="call-bottom">
           <div className="call-actions-ring">
             <button className="call-btn-round decline" onClick={declineCall}>
-              <span className="call-icon-phone rotated"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17.6 28c-2.8 0-6.1-1.8-9.3-5s-5-6.5-5-9.3c0-1.8.9-3.4 2.4-4.2l1.8-1c1.2-.6 2.6-.2 3.3.9l1.8 2.8c.6.9.4 2.1-.4 2.8l-1 .8c-.3.2-.3.5-.2.8.5 1 1.4 2.2 2.6 3.4s2.4 2.1 3.4 2.6c.3.1.6.1.8-.2l.8-1c.7-.8 1.9-1 2.8-.4l2.8 1.8c1.1.7 1.5 2.1.9 3.3l-1 1.8c-.8 1.5-2.4 2.4-4.2 2.4z" fill="#fff"/></svg></span>
+              <span className="call-icon-phone rotated"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="#fff"/></svg></span>
             </button>
             <button className="call-btn-round accept" onClick={answerCall}>
-              <span className="call-icon-phone"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17.6 28c-2.8 0-6.1-1.8-9.3-5s-5-6.5-5-9.3c0-1.8.9-3.4 2.4-4.2l1.8-1c1.2-.6 2.6-.2 3.3.9l1.8 2.8c.6.9.4 2.1-.4 2.8l-1 .8c-.3.2-.3.5-.2.8.5 1 1.4 2.2 2.6 3.4s2.4 2.1 3.4 2.6c.3.1.6.1.8-.2l.8-1c.7-.8 1.9-1 2.8-.4l2.8 1.8c1.1.7 1.5 2.1.9 3.3l-1 1.8c-.8 1.5-2.4 2.4-4.2 2.4z" fill="#fff"/></svg></span>
+              <span className="call-icon-phone"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="#fff"/></svg></span>
             </button>
           </div>
           <div className="call-labels-ring">
@@ -185,7 +185,7 @@ export default function PhoneCall({ onEnd }) {
         </div>
         <div className="call-bottom-bar">
           <button className="call-btn-round decline small" onClick={onEnd}>
-            <span className="call-icon-phone rotated"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17.6 28c-2.8 0-6.1-1.8-9.3-5s-5-6.5-5-9.3c0-1.8.9-3.4 2.4-4.2l1.8-1c1.2-.6 2.6-.2 3.3.9l1.8 2.8c.6.9.4 2.1-.4 2.8l-1 .8c-.3.2-.3.5-.2.8.5 1 1.4 2.2 2.6 3.4s2.4 2.1 3.4 2.6c.3.1.6.1.8-.2l.8-1c.7-.8 1.9-1 2.8-.4l2.8 1.8c1.1.7 1.5 2.1.9 3.3l-1 1.8c-.8 1.5-2.4 2.4-4.2 2.4z" fill="#fff"/></svg></span>
+            <span className="call-icon-phone rotated"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="#fff"/></svg></span>
           </button>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function PhoneCall({ onEnd }) {
             className="call-btn-round decline small"
             onClick={() => setPhase("ended")}
           >
-            <span className="call-icon-phone rotated"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17.6 28c-2.8 0-6.1-1.8-9.3-5s-5-6.5-5-9.3c0-1.8.9-3.4 2.4-4.2l1.8-1c1.2-.6 2.6-.2 3.3.9l1.8 2.8c.6.9.4 2.1-.4 2.8l-1 .8c-.3.2-.3.5-.2.8.5 1 1.4 2.2 2.6 3.4s2.4 2.1 3.4 2.6c.3.1.6.1.8-.2l.8-1c.7-.8 1.9-1 2.8-.4l2.8 1.8c1.1.7 1.5 2.1.9 3.3l-1 1.8c-.8 1.5-2.4 2.4-4.2 2.4z" fill="#fff"/></svg></span>
+            <span className="call-icon-phone rotated"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="#fff"/></svg></span>
           </button>
         </div>
       )}
