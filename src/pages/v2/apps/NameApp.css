@@ -1,7 +1,7 @@
 .calc-app {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 0;
   background: #000;
   margin: -20px -16px;
   padding: 0 16px;
@@ -44,12 +44,10 @@
 
 /* Display */
 .calc-display {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 16px 8px;
-  min-height: 200px;
 }
 
 .calc-names {
@@ -139,7 +137,7 @@
 /* Result */
 .calc-result {
   text-align: right;
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 9vw, 3.5rem);
   font-weight: 300;
   color: #fff;
   line-height: 1;
@@ -148,7 +146,7 @@
 }
 
 .calc-result.final {
-  font-size: 4.5rem;
+  font-size: clamp(3rem, 11vw, 4.5rem);
   color: #ff9f0a;
   font-weight: 400;
 }
@@ -189,21 +187,22 @@
 /* Keypad */
 .calc-keypad {
   padding-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .calc-row {
   display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
+  margin-bottom: clamp(8px, 2.5vw, 12px);
   justify-content: center;
 }
 
 .calc-key {
-  width: 72px;
-  height: 72px;
+  width: clamp(52px, 17vw, 72px);
+  height: clamp(52px, 17vw, 72px);
   border-radius: 50%;
   border: none;
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
   font-weight: 400;
   cursor: pointer;
   display: flex;
@@ -258,29 +257,8 @@
 }
 
 .calc-key.zero {
-  width: 156px;
+  width: clamp(112px, 36.5vw, 156px);
   border-radius: 36px;
   justify-content: flex-start;
   padding-left: 28px;
-}
-
-@media (max-height: 700px) {
-  .calc-key {
-    width: 62px;
-    height: 62px;
-    font-size: 1rem;
-  }
-  .calc-key.zero {
-    width: 136px;
-  }
-  .calc-row {
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .calc-result {
-    font-size: 2.8rem;
-  }
-  .calc-result.final {
-    font-size: 3.5rem;
-  }
 }

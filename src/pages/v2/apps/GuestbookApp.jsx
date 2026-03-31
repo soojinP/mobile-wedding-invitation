@@ -1,51 +1,65 @@
 import { useState, useEffect } from 'react'
+import { supabase } from '../../../lib/supabase'
 import './GuestbookApp.css'
 
-const STORAGE_KEY = 'wedding-guestbook'
-
-function loadEntries() {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY)
-    return data ? JSON.parse(data) : []
-  } catch {
-    return []
-  }
-}
-
-function saveEntries(entries) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries))
-}
-
 export default function GuestbookApp() {
-  const [entries, setEntries] = useState(loadEntries)
+  const [entries, setEntries] = useState([])
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
 
   useEffect(() => {
-    saveEntries(entries)
-  }, [entries])
+    fetchEntries()
+  }, [])
 
-  const handleSubmit = () => {
+  // Cooldown timer
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const t = setTimeout(() => setCooldown(cooldown - 1), 1000)
+    return () => clearTimeout(t)
+  }, [cooldown])
+
+  const fetchEntries = async () => {
+    const { data } = await supabase
+      .from('guestbook')
+      .select('*')
+      .order('created_at', { ascending: false })
+    setEntries(data || [])
+    setLoading(false)
+  }
+
+  const handleSubmit = async () => {
     const trimName = name.trim()
     const trimMsg = message.trim()
     if (!trimName || !trimMsg) return
 
-    const entry = {
-      id: Date.now(),
-      name: trimName,
-      message: trimMsg,
-      date: new Date().toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
+    setSubmitting(true)
+    const { data } = await supabase
+      .from('guestbook')
+      .insert({ name: trimName, message: trimMsg })
+      .select()
+      .single()
+
+    if (data) {
+      setEntries([data, ...entries])
     }
-    setEntries([entry, ...entries])
     setName('')
     setMessage('')
+    setSubmitting(false)
+    setCooldown(30)
   }
 
-  const canSubmit = name.trim() && message.trim()
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
+  const canSubmit = name.trim() && message.trim() && !submitting && cooldown <= 0
 
   return (
     <div>
@@ -70,13 +84,15 @@ export default function GuestbookApp() {
             disabled={!canSubmit}
             onClick={handleSubmit}
           >
-            작성
+            {submitting ? '작성 중...' : cooldown > 0 ? `${cooldown}초` : '작성'}
           </button>
         </div>
       </div>
 
       <div className="guestbook-list">
-        {entries.length === 0 ? (
+        {loading ? (
+          <div className="guestbook-empty">불러오는 중...</div>
+        ) : entries.length === 0 ? (
           <div className="guestbook-empty">
             아직 방명록이 없습니다.<br />첫 번째 축하 메시지를 남겨보세요!
           </div>
@@ -85,7 +101,7 @@ export default function GuestbookApp() {
             <div key={entry.id} className="guestbook-entry">
               <div className="guestbook-entry-header">
                 <span className="guestbook-entry-name">{entry.name}</span>
-                <span className="guestbook-entry-date">{entry.date}</span>
+                <span className="guestbook-entry-date">{formatDate(entry.created_at)}</span>
               </div>
               <p className="guestbook-entry-msg">{entry.message}</p>
             </div>
