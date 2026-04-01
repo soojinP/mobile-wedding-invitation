@@ -21,6 +21,7 @@ import GiftApp from './pages/v2/apps/GiftApp'
 import FortuneApp from './pages/v2/apps/FortuneApp'
 import CalendarApp from './pages/v2/apps/CalendarApp'
 import GuestbookApp from './pages/v2/apps/GuestbookApp'
+import V3Page from './pages/v3/V3Page'
 import './styles/global.css'
 
 const V1_PAGES = [
@@ -48,7 +49,7 @@ const V2_APPS = {
 }
 
 function App() {
-  const [version, setVersion] = useState('v2')
+  const [version, setVersion] = useState('v3')
   const [currentPage, setCurrentPage] = useState(0)
   const [pageDir, setPageDir] = useState('next')
   const [animating, setAnimating] = useState(false)
@@ -65,6 +66,7 @@ function App() {
 
   const switchToV2 = () => selectVersion('v2')
   const switchToV1 = () => selectVersion('v1')
+  const switchToV3 = () => selectVersion('v3')
 
   const changePage = useCallback((newPage, dir) => {
     if (animating) return
@@ -91,6 +93,16 @@ function App() {
       else goPrev()
     }
     touchStartX.current = null
+  }
+
+  // V3 mode
+  if (version === 'v3') {
+    return (
+      <div className="app">
+        <BgmPlayer src="/bgm2.mp3" />
+        <V3Page onSwitchV2={switchToV2} />
+      </div>
+    )
   }
 
   // V2 mode
