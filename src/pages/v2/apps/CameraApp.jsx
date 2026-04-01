@@ -289,12 +289,11 @@ export default function CameraApp() {
     ctx.closePath();
   };
 
+  const [saved, setSaved] = useState(false);
   const savePhoto = () => {
     if (!captured) return;
-    const a = document.createElement("a");
-    a.href = captured;
-    a.download = "wedding-photo.jpg";
-    a.click();
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
   };
 
   const retake = () => {
@@ -322,7 +321,7 @@ export default function CameraApp() {
                 fill="currentColor"
               />
             </svg>
-            <span>저장</span>
+            <span>{saved ? "찰칵!" : "저장"}</span>
           </button>
         </div>
       </div>
