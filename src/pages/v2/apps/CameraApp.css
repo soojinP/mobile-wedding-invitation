@@ -221,6 +221,14 @@
   color: #ffcc00;
 }
 
+.cam-notice {
+  text-align: center;
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 0 16px;
+  margin: 0;
+}
+
 /* Controls */
 .cam-controls {
   display: flex;
