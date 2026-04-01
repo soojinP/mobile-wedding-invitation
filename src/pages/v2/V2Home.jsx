@@ -163,6 +163,10 @@ function LockScreen({ onUnlock, onNotifTap }) {
   );
 }
 
+const HEART_EMOJIS = ["\u2764\uFE0F", "\uD83E\uDE77", "\uD83D\uDC95", "\uD83D\uDC96", "\uD83D\uDC97", "\uD83D\uDC93", "\u2763\uFE0F", "\uD83E\uDD0D", "\uD83E\uDD0E"];
+
+let _heartId = 0;
+
 function DdayWidget() {
   const wedding = new Date(2026, 4, 25);
   const today = new Date();
@@ -171,13 +175,53 @@ function DdayWidget() {
   const dday =
     diff === 0 ? "D-Day" : diff > 0 ? `D-${diff}` : `D+${Math.abs(diff)}`;
 
+  const [hearts, setHearts] = useState([]);
+  const [bounce, setBounce] = useState(false);
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    setBounce(true);
+    setTimeout(() => setBounce(false), 400);
+
+    const count = 6 + Math.floor(Math.random() * 4);
+    const newHearts = Array.from({ length: count }, () => ({
+      id: _heartId++,
+      emoji: HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)],
+      x: (Math.random() - 0.5) * 120,
+      y: -(40 + Math.random() * 80),
+      size: 0.7 + Math.random() * 0.8,
+      dur: 0.6 + Math.random() * 0.6,
+    }));
+    setHearts((prev) => [...prev, ...newHearts]);
+    setTimeout(() => {
+      setHearts((prev) => prev.filter((h) => !newHearts.includes(h)));
+    }, 1400);
+  };
+
   return (
-    <div className="dday-widget">
+    <div
+      className={`dday-widget ${bounce ? "dday-bounce" : ""}`}
+      onClick={handleClick}
+    >
       <div className="dday-left">
         <span className="dday-label">Wedding Day</span>
         <span className="dday-date">2026. 05. 25</span>
       </div>
       <div className="dday-count">{dday}</div>
+      {hearts.map((h) => (
+        <span
+          key={h.id}
+          className="dday-heart"
+          style={{
+            "--hx": `${h.x}px`,
+            "--hy": `${h.y}px`,
+            fontSize: `${h.size}rem`,
+            animationDuration: `${h.dur}s`,
+          }}
+        >
+          {h.emoji}
+        </span>
+      ))}
     </div>
   );
 }
