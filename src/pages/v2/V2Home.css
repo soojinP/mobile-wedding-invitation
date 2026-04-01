@@ -192,8 +192,10 @@
 
 .lock-date {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 400;
+  letter-spacing: 0.02em;
+  animation: fadeSlideDown 0.8s ease both;
 }
 
 .lock-time {
@@ -203,6 +205,22 @@
   letter-spacing: 2px;
   line-height: 1;
   margin-top: 4px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  animation: fadeSlideDown 0.8s ease 0.15s both;
+}
+
+.lock-time-colon {
+  animation: colonBlink 2s ease-in-out infinite;
+}
+
+@keyframes colonBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Notification */
@@ -293,13 +311,41 @@
 .now-playing-art {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.vinyl-disc {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, transparent 6px, rgba(255,255,255,0.08) 6px, rgba(255,255,255,0.08) 7px, transparent 7px),
+    radial-gradient(circle at center, transparent 11px, rgba(255,255,255,0.05) 11px, rgba(255,255,255,0.05) 12px, transparent 12px),
+    radial-gradient(circle at center, transparent 15px, rgba(255,255,255,0.03) 15px, rgba(255,255,255,0.03) 16px, transparent 16px),
+    conic-gradient(from 0deg, #2a1a3e, #3d2b5a, #1a1a2e, #2a1a3e);
+  animation: vinylSpin 3s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinyl-hole {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 0 4px rgba(102,126,234,0.4);
+}
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .now-playing-info {
@@ -460,6 +506,17 @@
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #fff 0%, #fff 40%, #ffd700 50%, #fff 60%, #fff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
 }
 
 /* App Grid */
@@ -820,4 +877,58 @@
   height: 5px;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 3px;
+}
+
+/* ===== Animations ===== */
+
+/* Lock screen: slide up from bottom */
+.anim-slide-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Home screen: pop in for icons */
+.anim-pop-in {
+  opacity: 0;
+  transform: scale(0.5);
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Home screen: fade in */
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Home screen: dock slide up */
+.anim-slide-up-home {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Notification glow pulse */
+.notif-card {
+  animation: notifGlow 3s ease-in-out infinite 1.5s;
+}
+
+@keyframes notifGlow {
+  0%, 100% { box-shadow: 0 2px 16px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1); }
+  50% { box-shadow: 0 2px 24px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.05); }
 }

@@ -52,9 +52,32 @@ function AppIcon({ type }) {
       return (
         <div className="icon-mail">
           <svg width="32" height="24" viewBox="0 0 32 24" fill="none">
-            <rect x="1" y="1" width="30" height="22" rx="4" fill="rgba(255,255,255,0.25)" />
-            <rect x="1" y="1" width="30" height="22" rx="4" stroke="#fff" strokeWidth="1.5" fill="none" />
-            <path d="M2 3l14 10L30 3" stroke="#fff" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <rect
+              x="1"
+              y="1"
+              width="30"
+              height="22"
+              rx="4"
+              fill="rgba(255,255,255,0.25)"
+            />
+            <rect
+              x="1"
+              y="1"
+              width="30"
+              height="22"
+              rx="4"
+              stroke="#fff"
+              strokeWidth="1.5"
+              fill="none"
+            />
+            <path
+              d="M2 3l14 10L30 3"
+              stroke="#fff"
+              strokeWidth="1.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
       );
@@ -113,8 +136,17 @@ function AppIcon({ type }) {
       return (
         <div className="icon-maps">
           <div className="icon-maps-bg" />
-          <svg className="icon-maps-pin" width="20" height="26" viewBox="0 0 20 26" fill="none">
-            <path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 16 10 16s10-8.5 10-16C20 4.5 15.5 0 10 0z" fill="#ff3b30" />
+          <svg
+            className="icon-maps-pin"
+            width="20"
+            height="26"
+            viewBox="0 0 20 26"
+            fill="none"
+          >
+            <path
+              d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 16 10 16s10-8.5 10-16C20 4.5 15.5 0 10 0z"
+              fill="#ff3b30"
+            />
             <circle cx="10" cy="10" r="4" fill="#fff" />
           </svg>
         </div>
@@ -240,13 +272,20 @@ function LockScreen({ onUnlock, onNotifTap }) {
       <div className="lock-content">
         <div className="lock-date">5월 25일 월요일</div>
         <div className="lock-time">
-          {time.h}:{time.m}
+          {time.h}
+          <span className="lock-time-colon">:</span>
+          {time.m}
         </div>
 
-        <div className="lock-now-playing">
+        <div
+          className="lock-now-playing anim-slide-up"
+          style={{ animationDelay: "0.3s" }}
+        >
           <div className="now-playing-card">
             <div className="now-playing-art">
-              <span>🎵</span>
+              <div className="vinyl-disc">
+                <div className="vinyl-hole" />
+              </div>
             </div>
             <div className="now-playing-info">
               <div className="now-playing-title">Wedding March</div>
@@ -263,7 +302,8 @@ function LockScreen({ onUnlock, onNotifTap }) {
         </div>
 
         <div
-          className="lock-notification"
+          className="lock-notification anim-slide-up"
+          style={{ animationDelay: "0.8s" }}
           onClick={(e) => {
             e.stopPropagation();
             onNotifTap();
@@ -282,9 +322,12 @@ function LockScreen({ onUnlock, onNotifTap }) {
           </div>
         </div>
       </div>
-      <div className="lock-swipe">
+      <div
+        className="lock-swipe anim-slide-up"
+        style={{ animationDelay: "1.2s" }}
+      >
         <div className="swipe-bar" />
-        <span className="swipe-text">위로 스와이프</span>
+        <span className="swipe-text">위로 스와이프하여 잠금 해제</span>
       </div>
     </div>
   );
@@ -314,12 +357,15 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
     <div className="home-screen">
       <StatusBar />
       <div className="home-content">
-        <DdayWidget />
+        <div className="anim-fade-in" style={{ animationDelay: "0.1s" }}>
+          <DdayWidget />
+        </div>
         <div className="app-grid">
-          {APPS.map((app) => (
+          {APPS.map((app, i) => (
             <button
               key={app.id}
-              className="app-icon-btn"
+              className="app-icon-btn anim-pop-in"
+              style={{ animationDelay: `${0.15 + i * 0.06}s` }}
               onClick={() => onAppClick(app.id)}
             >
               <div className="app-icon" style={{ background: app.color }}>
@@ -330,7 +376,10 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
           ))}
         </div>
       </div>
-      <div className="home-dock">
+      <div
+        className="home-dock anim-slide-up-home"
+        style={{ animationDelay: "0.8s" }}
+      >
         <button className="dock-btn" onClick={onSwitchV1}>
           <span className="dock-icon">🎪</span>
           <span className="dock-label">V1 모드</span>
@@ -346,7 +395,7 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
 
 let _callDone = false;
 
-const CALL_DELAY = 2500;
+const CALL_DELAY = 10000;
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   const [showCall, setShowCall] = useState(false);

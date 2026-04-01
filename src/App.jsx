@@ -49,7 +49,7 @@ const V2_APPS = {
 }
 
 function App() {
-  const [version, setVersion] = useState('v3')
+  const [version, setVersion] = useState('v2')
   const [currentPage, setCurrentPage] = useState(0)
   const [pageDir, setPageDir] = useState('next')
   const [animating, setAnimating] = useState(false)
