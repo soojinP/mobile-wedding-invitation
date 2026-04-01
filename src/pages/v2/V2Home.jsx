@@ -8,7 +8,6 @@ const HOME_APPS = [
   { id: "calendar", iconType: "calendar", label: "캘린더" },
   { id: "gallery", iconType: "photos", label: "사진" },
   { id: "venue", iconType: "maps", label: "오시는 길" },
-  { id: "shuttle", iconType: "transit", label: "셔틀" },
   { id: "guestbook", iconType: "notes", label: "방명록" },
   { id: "gift", iconType: "wallet", label: "축의금" },
 ];
@@ -183,40 +182,68 @@ function DdayWidget() {
   );
 }
 
-function HomeScreen({ onAppClick, onSwitchV1 }) {
+function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
   const [page, setPage] = useState(0);
   const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
   const touchDeltaX = useRef(0);
+  const directionRef = useRef(null); // 'h' or 'v'
   const [offsetX, setOffsetX] = useState(0);
+  const [pullY, setPullY] = useState(0);
   const [swiping, setSwiping] = useState(false);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    directionRef.current = null;
     setSwiping(true);
   };
 
   const handleTouchMove = (e) => {
     if (touchStartX.current === null) return;
-    const diff = e.touches[0].clientX - touchStartX.current;
-    touchDeltaX.current = diff;
-    // Only allow swiping left on page 0, right on page 1
-    if (page === 0 && diff > 0) return setOffsetX(0);
-    if (page === 1 && diff < 0) return setOffsetX(0);
-    setOffsetX(diff);
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+
+    // Determine direction on first significant move
+    if (!directionRef.current && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+      directionRef.current = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+    }
+
+    if (directionRef.current === "v") {
+      // Pull down to lock
+      if (dy > 0) setPullY(Math.min(dy, 400));
+      return;
+    }
+
+    if (directionRef.current === "h") {
+      touchDeltaX.current = dx;
+      if (page === 0 && dx > 0) return setOffsetX(0);
+      if (page === 1 && dx < 0) return setOffsetX(0);
+      setOffsetX(dx);
+    }
   };
 
   const handleTouchEnd = () => {
-    if (Math.abs(touchDeltaX.current) > 60) {
+    // Vertical: pull to lock
+    if (directionRef.current === "v" && pullY > 120) {
+      onLock();
+    }
+    setPullY(0);
+
+    // Horizontal: page switch
+    if (directionRef.current === "h" && Math.abs(touchDeltaX.current) > 60) {
       if (touchDeltaX.current < 0 && page === 0) setPage(1);
       if (touchDeltaX.current > 0 && page === 1) setPage(0);
     }
     touchStartX.current = null;
+    touchStartY.current = null;
     touchDeltaX.current = 0;
+    directionRef.current = null;
     setOffsetX(0);
     setSwiping(false);
   };
 
-  const translate = -page * 100;
+  const translate = -page * 50;
   const dragPx = swiping ? offsetX : 0;
 
   return (
@@ -302,6 +329,19 @@ function HomeScreen({ onAppClick, onSwitchV1 }) {
       <div className="home-indicator">
         <div className="indicator-bar" />
       </div>
+
+      {/* Pull-down lock overlay */}
+      {pullY > 0 && (
+        <div
+          className="pull-lock-overlay"
+          style={{
+            transform: `translateY(${-100 + (pullY / 400) * 100}%)`,
+            opacity: Math.min(pullY / 200, 1),
+          }}
+        >
+          <div className="pull-lock-bg" />
+        </div>
+      )}
     </div>
   );
 }
@@ -312,6 +352,10 @@ const CALL_DELAY = 10000;
 
 export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
   const [showCall, setShowCall] = useState(false);
+  const [locking, setLocking] = useState(false);
+  const [internalLocked, setInternalLocked] = useState(false);
+
+  const isLocked = !unlocked || internalLocked;
 
   // 1초 후 전화 오버레이 (잠금/홈 상관없이)
   useEffect(() => {
@@ -320,8 +364,13 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
     setTimeout(() => setShowCall(true), CALL_DELAY);
   }, []);
 
-  const handleNotifTap = () => {
+  const handleUnlock = () => {
     onUnlock();
+    setInternalLocked(false);
+  };
+
+  const handleNotifTap = () => {
+    handleUnlock();
     setTimeout(() => onAppClick("invite"), 100);
   };
 
@@ -329,13 +378,31 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
     setShowCall(false);
   };
 
+  const handleLock = () => {
+    setLocking(true);
+  };
+
+  const handleLockAnimEnd = () => {
+    if (locking) {
+      setLocking(false);
+      setInternalLocked(true);
+    }
+  };
+
   return (
     <div className="iphone-frame">
       <div className="iphone-body">
-        {!unlocked ? (
-          <LockScreen onUnlock={onUnlock} onNotifTap={handleNotifTap} />
+        {isLocked && !locking ? (
+          <LockScreen onUnlock={handleUnlock} onNotifTap={handleNotifTap} />
         ) : (
-          <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} />
+          <>
+            <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} onLock={handleLock} />
+            {locking && (
+              <div className="lock-slide-down" onAnimationEnd={handleLockAnimEnd}>
+                <LockScreen onUnlock={() => {}} onNotifTap={() => {}} />
+              </div>
+            )}
+          </>
         )}
         {showCall && (
           <div className="call-overlay">

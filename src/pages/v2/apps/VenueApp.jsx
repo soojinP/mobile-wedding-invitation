@@ -41,6 +41,32 @@ export default function VenueApp() {
           2시간 무료 (동문회관으로 출차 시 적용)
         </p>
       </div>
+
+      <div className="ios-card">
+        <p className="ios-card-title">🚌 셔틀버스</p>
+        <p style={{ fontSize: '0.8rem', color: '#8e8e93', textAlign: 'center', marginBottom: 12 }}>
+          이대역 3번 출구 앞 ↔ 동문회관
+        </p>
+        <div style={{ display: 'flex', gap: 0 }}>
+          <div style={{ flex: 1, textAlign: 'center' }}>
+            <p style={{ fontSize: '0.7rem', color: '#007aff', fontWeight: 600, marginBottom: 8 }}>이대역 → 동문회관</p>
+            <p style={{ fontSize: '0.95rem', color: '#1c1c1e', marginBottom: 4 }}>12:20</p>
+            <p style={{ fontSize: '0.95rem', color: '#1c1c1e' }}>12:40</p>
+          </div>
+          <div style={{ width: 1, background: '#e5e5ea', margin: '0 8px' }} />
+          <div style={{ flex: 1, textAlign: 'center' }}>
+            <p style={{ fontSize: '0.7rem', color: '#007aff', fontWeight: 600, marginBottom: 8 }}>동문회관 → 이대역</p>
+            <p style={{ fontSize: '0.95rem', color: '#1c1c1e', marginBottom: 4 }}>14:10</p>
+            <p style={{ fontSize: '0.95rem', color: '#1c1c1e' }}>14:30</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="ios-card" style={{ background: 'rgba(255,59,48,0.06)' }}>
+        <p style={{ fontSize: '0.8rem', color: '#ff3b30', lineHeight: 1.6 }}>
+          셔틀버스 좌석이 한정되어 있으니 가급적 일찍 탑승해주세요.
+        </p>
+      </div>
     </div>
   )
 }

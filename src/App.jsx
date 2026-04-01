@@ -16,7 +16,6 @@ import CompatApp from './pages/v2/apps/CompatApp'
 import NameApp from './pages/v2/apps/NameApp'
 import GalleryApp from './pages/v2/apps/GalleryApp'
 import VenueApp from './pages/v2/apps/VenueApp'
-import ShuttleApp from './pages/v2/apps/ShuttleApp'
 import GiftApp from './pages/v2/apps/GiftApp'
 import FortuneApp from './pages/v2/apps/FortuneApp'
 import CalendarApp from './pages/v2/apps/CalendarApp'
@@ -42,7 +41,6 @@ const V2_APPS = {
   name: { title: '이름궁합', component: NameApp, dark: true },
   gallery: { title: '사진', component: GalleryApp, dark: false },
   venue: { title: '오시는 길', component: VenueApp, dark: false },
-  shuttle: { title: '셔틀버스', component: ShuttleApp, dark: false },
   fortune: { title: '포춘쿠키', component: FortuneApp, dark: false },
   guestbook: { title: '방명록', component: GuestbookApp, dark: false },
   gift: { title: '축의금', component: GiftApp, dark: false },
