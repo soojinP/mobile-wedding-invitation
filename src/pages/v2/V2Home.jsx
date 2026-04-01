@@ -7,6 +7,7 @@ const HOME_APPS = [
   { id: "invite", iconType: "mail", label: "초대장" },
   { id: "calendar", iconType: "calendar", label: "캘린더" },
   { id: "gallery", iconType: "photos", label: "사진" },
+  { id: "camera", iconType: "camera", label: "포토부스" },
   { id: "venue", iconType: "maps", label: "오시는 길" },
   { id: "guestbook", iconType: "notes", label: "방명록" },
   { id: "gift", iconType: "wallet", label: "축의금" },
@@ -19,13 +20,7 @@ const LIBRARY_APPS = [
 ];
 
 function AppIcon({ type }) {
-  return (
-    <img
-      src={`/icons/${type}.png`}
-      alt={type}
-      className="app-icon-img"
-    />
-  );
+  return <img src={`/icons/${type}.png`} alt={type} className="app-icon-img" />;
 }
 
 function LockScreen({ onUnlock, onNotifTap }) {
@@ -163,7 +158,17 @@ function LockScreen({ onUnlock, onNotifTap }) {
   );
 }
 
-const HEART_EMOJIS = ["\u2764\uFE0F", "\uD83E\uDE77", "\uD83D\uDC95", "\uD83D\uDC96", "\uD83D\uDC97", "\uD83D\uDC93", "\u2763\uFE0F", "\uD83E\uDD0D", "\uD83E\uDD0E"];
+const HEART_EMOJIS = [
+  "\u2764\uFE0F",
+  "\uD83E\uDE77",
+  "\uD83D\uDC95",
+  "\uD83D\uDC96",
+  "\uD83D\uDC97",
+  "\uD83D\uDC93",
+  "\u2763\uFE0F",
+  "\uD83E\uDD0D",
+  "\uD83D\uDC9B",
+];
 
 let _heartId = 0;
 
@@ -302,7 +307,9 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
         className="home-pages"
         style={{
           transform: `translateX(calc(${translate}% + ${dragPx}px))`,
-          transition: swiping ? "none" : "transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)",
+          transition: swiping
+            ? "none"
+            : "transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)",
         }}
       >
         {/* Page 1: Home */}
@@ -356,8 +363,14 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
 
       {/* Page dots */}
       <div className="page-dots">
-        <span className={`page-dot ${page === 0 ? "active" : ""}`} onClick={() => setPage(0)} />
-        <span className={`page-dot ${page === 1 ? "active" : ""}`} onClick={() => setPage(1)} />
+        <span
+          className={`page-dot ${page === 0 ? "active" : ""}`}
+          onClick={() => setPage(0)}
+        />
+        <span
+          className={`page-dot ${page === 1 ? "active" : ""}`}
+          onClick={() => setPage(1)}
+        />
       </div>
 
       <div
@@ -440,9 +453,16 @@ export default function V2Home({ unlocked, onUnlock, onSwitchV1, onAppClick }) {
           <LockScreen onUnlock={handleUnlock} onNotifTap={handleNotifTap} />
         ) : (
           <>
-            <HomeScreen onAppClick={onAppClick} onSwitchV1={onSwitchV1} onLock={handleLock} />
+            <HomeScreen
+              onAppClick={onAppClick}
+              onSwitchV1={onSwitchV1}
+              onLock={handleLock}
+            />
             {locking && (
-              <div className="lock-slide-down" onAnimationEnd={handleLockAnimEnd}>
+              <div
+                className="lock-slide-down"
+                onAnimationEnd={handleLockAnimEnd}
+              >
                 <LockScreen onUnlock={() => {}} onNotifTap={() => {}} />
               </div>
             )}

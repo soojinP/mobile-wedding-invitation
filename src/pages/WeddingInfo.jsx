@@ -1,4 +1,4 @@
-import './WeddingInfo.css'
+import "./WeddingInfo.css";
 
 export default function WeddingInfo({ onNext }) {
   return (
@@ -13,8 +13,10 @@ export default function WeddingInfo({ onNext }) {
       </div>
 
       <div className="info-notice fade-in">
-        네, 월요일 맞습니다.<br />
-        하지만 걱정 마세요 -- 대체공휴일이라 쉬는 날입니다.<br />
+        네, 월요일 맞습니다.
+        <br />
+        하지만 걱정 마세요 -- 대체공휴일이라 쉬는 날입니다.
+        <br />
         캘린더 확인해보세요. 빨간 날이에요. 진짜로요.
       </div>
 
@@ -28,36 +30,45 @@ export default function WeddingInfo({ onNext }) {
 
       <div className="family-info fade-in-delay-2">
         <div className="family-row">
-          <p className="family-side">신랑측</p>
+          <p className="family-side">🤵‍♂️신랑측</p>
           <p className="family-parents">
-            <span className="family-relation">아버지</span> 이OO
+            <span className="family-relation">아버지</span> 이병기
             <span className="family-dot"> / </span>
-            <span className="family-relation">어머니</span> OOO
+            <span className="family-relation">어머니</span> 함미애
           </p>
-          <p className="family-child">장남 <strong>창민</strong></p>
+          <p className="family-child">
+            장남 <strong>창민</strong>
+          </p>
         </div>
         <div className="family-row">
-          <p className="family-side">신부측</p>
+          <p className="family-side">👰‍♀️신부측</p>
           <p className="family-parents">
-            <span className="family-relation">아버지</span> 박OO
+            <span className="family-relation">아버지</span> 박영걸
             <span className="family-dot"> / </span>
-            <span className="family-relation">어머니</span> OOO
+            <span className="family-relation">어머니</span> 구자민
           </p>
-          <p className="family-child">차녀 <strong>수진</strong></p>
+          <p className="family-child">
+            차녀 <strong>수진</strong>
+          </p>
         </div>
       </div>
 
       <div className="info-quote fade-in-delay-3">
         <p>
-          &ldquo;서로 다른 두 사람이<br />
+          &ldquo;서로 다른 두 사람이
+          <br />
           하나의 길을 걷기로 했습니다.&rdquo;
         </p>
-        <p className="quote-small">(솔직히 집 계약이 먼저였지만)</p>
+        <p className="quote-small">그 길의 첫걸음에, 여러분을 초대합니다.</p>
       </div>
 
-      <button className="btn fade-in-delay-3" onClick={onNext} style={{ marginTop: 40 }}>
+      <button
+        className="btn fade-in-delay-3"
+        onClick={onNext}
+        style={{ marginTop: 40 }}
+      >
         오시는 길
       </button>
     </div>
-  )
+  );
 }
