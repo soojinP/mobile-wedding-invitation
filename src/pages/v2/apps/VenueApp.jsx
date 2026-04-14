@@ -37,8 +37,10 @@ export default function VenueApp() {
           <span className="ios-card-label">승용차</span>
         </div>
         <p style={{ fontSize: '0.8rem', color: '#8e8e93', padding: '0 0 4px', lineHeight: 1.6 }}>
-          동문회관 주차장 이용<br />
-          2시간 무료 (동문회관으로 출차 시 적용)
+          동문회관 주차장 이용
+        </p>
+        <p style={{ fontSize: '0.82rem', color: '#007aff', fontWeight: 600, padding: '4px 0' }}>
+          🅿️ 2시간 무료 (동문회관으로 출차 시 적용)
         </p>
       </div>
 
@@ -64,7 +66,8 @@ export default function VenueApp() {
 
       <div className="ios-card" style={{ background: 'rgba(255,59,48,0.06)' }}>
         <p style={{ fontSize: '0.8rem', color: '#ff3b30', lineHeight: 1.6 }}>
-          셔틀버스 좌석이 한정되어 있으니 가급적 일찍 탑승해주세요.
+          역에서 많이 걸어야해요 ㅜ 영차영차 ,,,<br />
+          셔틀버스 타시는 걸 강력 추천합니다! 🚌
         </p>
       </div>
     </div>

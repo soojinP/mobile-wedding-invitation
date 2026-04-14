@@ -4,13 +4,13 @@ import './GiftApp.css'
 const ACCOUNTS = {
   groom: [
     { relation: '신랑', name: '이창민', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신랑 아버지', name: '이OO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신랑 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신랑 아버지', name: '이병기', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신랑 어머니', name: '함미애', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
   ],
   bride: [
-    { relation: '신부', name: '박수진', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신부 아버지', name: '박OO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신부 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신부', name: '박수진', bank: '하나은행', account: '41891045605907', kakao: '' },
+    { relation: '신부 아버지', name: '박영걸', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신부 어머니', name: '구자민', bank: '국민은행', account: '000-0000-0000-00', kakao: '' },
   ],
 }
 
