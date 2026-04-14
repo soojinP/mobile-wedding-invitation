@@ -134,6 +134,7 @@
 }
 
 .cal-add-btn {
+  display: block;
   margin-top: 10px;
   background: #ff3b30;
   color: #fff;
@@ -145,6 +146,8 @@
   font-family: var(--sans);
   cursor: pointer;
   width: 100%;
+  text-align: center;
+  text-decoration: none;
 }
 
 .cal-add-btn:active {
