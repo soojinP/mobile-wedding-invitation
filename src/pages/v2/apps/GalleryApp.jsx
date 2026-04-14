@@ -1,14 +1,7 @@
 import { useState } from 'react'
 import './GalleryApp.css'
 
-const PHOTOS = [
-  '/photos/photo1.jpg',
-  '/photos/photo2.jpg',
-  '/photos/photo3.jpg',
-  '/photos/photo4.jpg',
-  '/photos/photo5.jpg',
-  '/photos/photo6.jpg',
-]
+const PHOTOS = Array.from({ length: 10 }, (_, i) => `/photos/photo${i + 1}.jpg`)
 
 export default function GalleryApp() {
   const [selected, setSelected] = useState(null)
@@ -21,9 +14,7 @@ export default function GalleryApp() {
       <div className="ios-gallery-grid">
         {PHOTOS.map((src, i) => (
           <div key={i} className="ios-gallery-item" onClick={() => setSelected(i)}>
-            <div className="ios-gallery-placeholder">
-              <span>{i + 1}</span>
-            </div>
+            <img src={src} alt={`photo ${i + 1}`} loading="lazy" />
           </div>
         ))}
       </div>
@@ -36,9 +27,7 @@ export default function GalleryApp() {
             <span />
           </div>
           <div className="ios-viewer-body">
-            <div className="ios-viewer-placeholder">
-              Photo {selected + 1}
-            </div>
+            <img src={PHOTOS[selected]} alt={`photo ${selected + 1}`} />
           </div>
           <div className="ios-viewer-nav" onClick={(e) => e.stopPropagation()}>
             <button onClick={() => setSelected(selected > 0 ? selected - 1 : PHOTOS.length - 1)}>

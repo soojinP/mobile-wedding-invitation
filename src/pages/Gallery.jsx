@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react'
 import './Gallery.css'
 
-const PHOTOS = [
-  { src: '/photos/photo1.jpg', caption: '' },
-  { src: '/photos/photo2.jpg', caption: '' },
-  { src: '/photos/photo3.jpg', caption: '' },
-  { src: '/photos/photo4.jpg', caption: '' },
-  { src: '/photos/photo5.jpg', caption: '' },
-  { src: '/photos/photo6.jpg', caption: '' },
-]
+const PHOTOS = Array.from({ length: 10 }, (_, i) => ({
+  src: `/photos/photo${i + 1}.jpg`,
+  caption: '',
+}))
 
 const TITLE_CARDS = [
   '제1막',
@@ -16,6 +12,10 @@ const TITLE_CARDS = [
   '제2막',
   '사랑이 무르익고...',
   '제3막',
+  '함께한 날들...',
+  '제4막',
+  '설레는 약속...',
+  '제5막',
   '드디어, 해피엔딩.',
 ]
 
@@ -100,10 +100,7 @@ export default function Gallery({ onNext }) {
             </div>
           ) : (
             <div key={`photo-${photoIdx}`} className="film-photo film-fade">
-              <div className="film-photo-placeholder">
-                <span>{photoIdx + 1}</span>
-                <p>사진을 넣어주세요</p>
-              </div>
+              <img src={PHOTOS[photoIdx].src} alt={PHOTOS[photoIdx].caption || `photo ${photoIdx + 1}`} className="film-photo-img" />
             </div>
           )}
 

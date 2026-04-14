@@ -26,3 +26,4 @@ dist-ssr
 
 # Original photos (too large for git)
 public/photos/originals
+.vercel
