@@ -6,12 +6,13 @@ function addToCalendar() {
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
+    "PRODID:-//Wedding//EN",
     "BEGIN:VEVENT",
     "DTSTART:20260525T040000Z",
     "DTEND:20260525T060000Z",
     "SUMMARY:수진 ♥ 창민 결혼식",
     "LOCATION:연세대학교 동문회관",
-    "DESCRIPTION:2026년 5월 25일 오후 1시\\n연세대학교 동문회관",
+    "DESCRIPTION:2026년 5월 25일 오후 1시 연세대학교 동문회관",
     "BEGIN:VALARM",
     "TRIGGER:-PT1H",
     "ACTION:DISPLAY",
@@ -21,13 +22,8 @@ function addToCalendar() {
     "END:VCALENDAR",
   ].join("\r\n");
 
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "wedding.ics";
-  a.click();
-  URL.revokeObjectURL(url);
+  const dataUri = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+  window.location.href = dataUri;
 }
 
 // May 2026: starts on Friday (index 5), 31 days
