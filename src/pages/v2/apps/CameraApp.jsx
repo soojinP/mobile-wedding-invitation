@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import "./CameraApp.css";
 
+const CDN = import.meta.env.VITE_CDN_URL;
 const FRAMES = [
-  { id: "heart", label: "Heart", photo: "/photos/photo1.jpg" },
-  { id: "film", label: "Film", photo: "/photos/photo2.jpg" },
-  { id: "polaroid", label: "Polaroid", photo: "/photos/photo3.jpg" },
-  { id: "strip", label: "4-Cut", photo: "/photos/photo4.jpg" },
+  { id: "heart", label: "Heart", photo: `${CDN}/photo1.jpg` },
+  { id: "film", label: "Film", photo: `${CDN}/photo2.jpg` },
+  { id: "polaroid", label: "Polaroid", photo: `${CDN}/photo3.jpg` },
+  { id: "strip", label: "4-Cut", photo: `${CDN}/photo4.jpg` },
 ];
 
 export default function CameraApp() {

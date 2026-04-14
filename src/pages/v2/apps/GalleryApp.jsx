@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './GalleryApp.css'
 
-const PHOTOS = Array.from({ length: 10 }, (_, i) => `/photos/photo${i + 1}.jpg`)
+const CDN = import.meta.env.VITE_CDN_URL
+const PHOTOS = Array.from({ length: 10 }, (_, i) => `${CDN}/photo${i + 1}.jpg`)
 
 export default function GalleryApp() {
   const [selected, setSelected] = useState(null)
@@ -14,7 +15,7 @@ export default function GalleryApp() {
       <div className="ios-gallery-grid">
         {PHOTOS.map((src, i) => (
           <div key={i} className="ios-gallery-item" onClick={() => setSelected(i)}>
-            <img src={src} alt={`photo ${i + 1}`} loading="lazy" />
+            <img src={src} alt={`photo ${i + 1}`} />
           </div>
         ))}
       </div>

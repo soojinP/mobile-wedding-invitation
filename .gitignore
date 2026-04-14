@@ -24,6 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Original photos (too large for git)
-public/photos/originals
+# Photos (stored on Cloudinary CDN)
+public/photos
+public/og-image.jpg
 .vercel

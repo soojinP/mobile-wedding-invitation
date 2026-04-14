@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import './Gallery.css'
 
+const CDN = import.meta.env.VITE_CDN_URL
 const PHOTOS = Array.from({ length: 10 }, (_, i) => ({
-  src: `/photos/photo${i + 1}.jpg`,
+  src: `${CDN}/photo${i + 1}.jpg`,
   caption: '',
 }))
 

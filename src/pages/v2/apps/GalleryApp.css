@@ -10,6 +10,7 @@
   aspect-ratio: 1;
   cursor: pointer;
   overflow: hidden;
+  background: #e5e5ea;
 }
 
 .ios-gallery-item:active {

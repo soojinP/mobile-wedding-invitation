@@ -315,15 +315,14 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
         {/* Page 1: Home */}
         <div className="home-page">
           <div className="home-content">
-            <div className="anim-fade-in" style={{ animationDelay: "0.1s" }}>
+            <div>
               <DdayWidget />
             </div>
             <div className="app-grid">
-              {HOME_APPS.map((app, i) => (
+              {HOME_APPS.map((app) => (
                 <button
                   key={app.id}
-                  className="app-icon-btn anim-pop-in"
-                  style={{ animationDelay: `${0.15 + i * 0.06}s` }}
+                  className="app-icon-btn"
                   onClick={() => onAppClick(app.id)}
                 >
                   <div className="app-icon">
@@ -373,10 +372,7 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
         />
       </div>
 
-      <div
-        className="home-dock anim-slide-up-home"
-        style={{ animationDelay: "0.8s" }}
-      >
+      <div className="home-dock">
         <button className="dock-btn" onClick={onSwitchV1}>
           <span className="dock-icon">🎪</span>
           <span className="dock-label">V1 모드</span>
