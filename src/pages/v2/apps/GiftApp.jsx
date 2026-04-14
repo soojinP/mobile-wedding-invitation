@@ -61,6 +61,12 @@ export default function GiftApp() {
           <CopyRow key={i} info={acc} />
         ))}
       </div>
+
+      <div className="ios-card" style={{ textAlign: 'center' }}>
+        <p style={{ fontSize: '0.82rem', color: '#8e8e93', lineHeight: 1.7 }}>
+          마음 써주셔서 감사합니다.
+        </p>
+      </div>
     </div>
   )
 }
