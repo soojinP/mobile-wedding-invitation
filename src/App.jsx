@@ -20,7 +20,6 @@ import GiftApp from './pages/v2/apps/GiftApp'
 import FortuneApp from './pages/v2/apps/FortuneApp'
 import CalendarApp from './pages/v2/apps/CalendarApp'
 import GuestbookApp from './pages/v2/apps/GuestbookApp'
-import CameraApp from './pages/v2/apps/CameraApp'
 import './styles/global.css'
 
 const V1_PAGES = [
@@ -40,7 +39,6 @@ const V2_APPS = {
   compat: { title: '궁합', component: CompatApp, dark: false },
   name: { title: '이름궁합', component: NameApp, dark: true },
   gallery: { title: '사진', component: GalleryApp, dark: false },
-  camera: { title: '포토부스', component: CameraApp, dark: true },
   venue: { title: '오시는 길', component: VenueApp, dark: false },
   fortune: { title: '포춘쿠키', component: FortuneApp, dark: false },
   guestbook: { title: '방명록', component: GuestbookApp, dark: false },

@@ -7,7 +7,6 @@ const HOME_APPS = [
   { id: "invite", iconType: "mail", label: "초대장" },
   { id: "calendar", iconType: "calendar", label: "캘린더" },
   { id: "gallery", iconType: "photos", label: "사진" },
-  { id: "camera", iconType: "camera", label: "포토부스" },
   { id: "venue", iconType: "maps", label: "오시는 길" },
   { id: "guestbook", iconType: "notes", label: "방명록" },
   { id: "gift", iconType: "wallet", label: "축의금" },
