@@ -3,6 +3,9 @@ import PhoneCall from "./PhoneCall";
 import StatusBar from "./StatusBar";
 import "./V2Home.css";
 
+const CDN = import.meta.env.VITE_CDN_URL;
+const WALLPAPER = `url(${CDN}/photo0.jpg)`;
+
 const HOME_APPS = [
   { id: "invite", iconType: "mail", label: "초대장" },
   { id: "calendar", iconType: "calendar", label: "캘린더" },
@@ -80,6 +83,7 @@ function LockScreen({ onUnlock, onNotifTap }) {
       ref={screenRef}
       className={`lock-screen ${unlocking ? "unlocking" : ""}`}
       style={{
+        "--wallpaper": WALLPAPER,
         transform,
         opacity,
         transition:
@@ -297,6 +301,7 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
   return (
     <div
       className="home-screen"
+      style={{ "--wallpaper": WALLPAPER }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
