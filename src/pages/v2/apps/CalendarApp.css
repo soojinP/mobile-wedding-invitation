@@ -132,3 +132,21 @@
   margin-top: 4px;
   font-weight: 500;
 }
+
+.cal-add-btn {
+  margin-top: 10px;
+  background: #ff3b30;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--sans);
+  cursor: pointer;
+  width: 100%;
+}
+
+.cal-add-btn:active {
+  opacity: 0.7;
+}

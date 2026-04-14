@@ -2,6 +2,34 @@ import "./CalendarApp.css";
 
 const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
+function addToCalendar() {
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "DTSTART:20260525T040000Z",
+    "DTEND:20260525T060000Z",
+    "SUMMARY:수진 ♥ 창민 결혼식",
+    "LOCATION:연세대학교 동문회관",
+    "DESCRIPTION:2026년 5월 25일 오후 1시\\n연세대학교 동문회관",
+    "BEGIN:VALARM",
+    "TRIGGER:-PT1H",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:결혼식 1시간 전",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "wedding.ics";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // May 2026: starts on Friday (index 5), 31 days
 const MAY_START = 5;
 const MAY_DAYS = 31;
@@ -52,6 +80,9 @@ export default function CalendarApp() {
           <div className="cal-event-title">수진 ♥ 창민 결혼식</div>
           <div className="cal-event-location">연세대학교 동문회관</div>
           <div className="cal-event-note">대체공휴일 (부처님오신날)</div>
+          <button className="cal-add-btn" onClick={addToCalendar}>
+            캘린더에 추가
+          </button>
         </div>
       </div>
 
