@@ -6,7 +6,7 @@ export default function InviteApp() {
   return (
     <div>
       <div className="mail-hero">
-        <img src={`${CDN}/photo0.jpg`} alt="창민 & 수진" className="mail-hero-img" />
+        <img src={`${CDN}/photo9.jpg`} alt="창민 & 수진" className="mail-hero-img" />
         <div className="mail-hero-overlay">
           <p className="mail-hero-names">창민 & 수진</p>
         </div>
