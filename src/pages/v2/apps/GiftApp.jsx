@@ -3,14 +3,14 @@ import './GiftApp.css'
 
 const ACCOUNTS = {
   groom: [
-    { relation: '신랑', name: '이창민', bank: 'OO은행', account: '000-0000-0000-00' },
-    { relation: '신랑 아버지', name: '이OO', bank: 'OO은행', account: '000-0000-0000-00' },
-    { relation: '신랑 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00' },
+    { relation: '신랑', name: '이창민', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신랑 아버지', name: '이OO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신랑 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
   ],
   bride: [
-    { relation: '신부', name: '박수진', bank: 'OO은행', account: '000-0000-0000-00' },
-    { relation: '신부 아버지', name: '박OO', bank: 'OO은행', account: '000-0000-0000-00' },
-    { relation: '신부 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00' },
+    { relation: '신부', name: '박수진', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신부 아버지', name: '박OO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+    { relation: '신부 어머니', name: 'OOO', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
   ],
 }
 
@@ -33,17 +33,24 @@ function CopyRow({ info }) {
   }
 
   return (
-    <div className="ios-card-row" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 4 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="gift-row">
+      <div className="gift-row-top">
         <div>
-          <span style={{ fontSize: '0.7rem', color: '#8e8e93' }}>{info.relation}</span>
-          <p style={{ fontSize: '0.9rem', fontWeight: 600 }}>{info.name}</p>
+          <span className="gift-relation">{info.relation}</span>
+          <p className="gift-name">{info.name}</p>
         </div>
-        <button className="ios-copy-btn" onClick={handleCopy}>
-          {copied ? '복사됨' : '복사'}
-        </button>
+        <span className="gift-bank">{info.bank}</span>
       </div>
-      <p style={{ fontSize: '0.8rem', color: '#8e8e93' }}>{info.bank} {info.account}</p>
+      <div className="gift-actions">
+        <button className="ios-copy-btn" onClick={handleCopy}>
+          {copied ? '복사됨 ✓' : '계좌번호 복사'}
+        </button>
+        {info.kakao && (
+          <a className="kakao-pay-btn" href={info.kakao} target="_blank" rel="noopener noreferrer">
+            카카오페이 송금
+          </a>
+        )}
+      </div>
     </div>
   )
 }
