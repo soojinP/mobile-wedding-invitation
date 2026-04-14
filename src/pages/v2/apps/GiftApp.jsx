@@ -1,18 +1,10 @@
 import { useState } from 'react'
 import './GiftApp.css'
 
-const ACCOUNTS = {
-  groom: [
-    { relation: '신랑', name: '이창민', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신랑 아버지', name: '이병기', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신랑 어머니', name: '함미애', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
-  ],
-  bride: [
-    { relation: '신부', name: '박수진', bank: '하나은행', account: '41891045605907', kakao: '' },
-    { relation: '신부 아버지', name: '박영걸', bank: '농협은행', account: '000-0000-0000-00', kakao: '' },
-    { relation: '신부 어머니', name: '구자민', bank: '국민은행', account: '000-0000-0000-00', kakao: '' },
-  ],
-}
+const ACCOUNTS = [
+  { relation: '신랑', name: '이창민', bank: 'OO은행', account: '000-0000-0000-00', kakao: '' },
+  { relation: '신부', name: '박수진', bank: '하나은행', account: '41891045605907', kakao: '' },
+]
 
 function CopyRow({ info }) {
   const [copied, setCopied] = useState(false)
@@ -56,8 +48,6 @@ function CopyRow({ info }) {
 }
 
 export default function GiftApp() {
-  const [tab, setTab] = useState('groom')
-
   return (
     <div>
       <div className="ios-card" style={{ textAlign: 'center' }}>
@@ -66,17 +56,8 @@ export default function GiftApp() {
         </p>
       </div>
 
-      <div className="ios-segment">
-        <button className={tab === 'groom' ? 'active' : ''} onClick={() => setTab('groom')}>
-          신랑측
-        </button>
-        <button className={tab === 'bride' ? 'active' : ''} onClick={() => setTab('bride')}>
-          신부측
-        </button>
-      </div>
-
       <div className="ios-card">
-        {ACCOUNTS[tab].map((acc, i) => (
+        {ACCOUNTS.map((acc, i) => (
           <CopyRow key={i} info={acc} />
         ))}
       </div>
