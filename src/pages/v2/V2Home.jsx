@@ -4,7 +4,7 @@ import StatusBar from "./StatusBar";
 import "./V2Home.css";
 
 const CDN = import.meta.env.VITE_CDN_URL;
-const BG = { backgroundImage: `url(${CDN}/photo0.jpg)` };
+const BG = { background: `url(${CDN}/photo0.jpg) center/cover no-repeat` };
 
 const HOME_APPS = [
   { id: "invite", iconType: "mail", label: "초대장" },

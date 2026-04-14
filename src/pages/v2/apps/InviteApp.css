@@ -9,8 +9,9 @@
 .mail-hero-img {
   width: 100%;
   display: block;
-  max-height: 280px;
+  max-height: 380px;
   object-fit: cover;
+  object-position: top;
 }
 
 .mail-hero-overlay {
