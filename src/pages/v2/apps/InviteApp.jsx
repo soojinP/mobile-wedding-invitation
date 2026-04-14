@@ -1,8 +1,16 @@
 import './InviteApp.css'
 
+const CDN = import.meta.env.VITE_CDN_URL
+
 export default function InviteApp() {
   return (
     <div>
+      <div className="mail-hero">
+        <img src={`${CDN}/photo0.jpg`} alt="창민 & 수진" className="mail-hero-img" />
+        <div className="mail-hero-overlay">
+          <p className="mail-hero-names">창민 & 수진</p>
+        </div>
+      </div>
       <div className="mail-message">
         <div className="mail-header">
           <div className="mail-row">

@@ -286,3 +286,11 @@ html, body {
   to { width: 100%; }
 }
 
+/* Photo download prevention */
+img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+

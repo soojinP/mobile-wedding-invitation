@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import Cover from './pages/Cover'
 import Compatibility from './pages/Compatibility'
 import NameCompat from './pages/NameCompat'
@@ -48,6 +48,18 @@ const V2_APPS = {
 }
 
 function App() {
+  useEffect(() => {
+    const block = (e) => {
+      if (e.target.tagName === 'IMG') e.preventDefault()
+    }
+    document.addEventListener('contextmenu', block)
+    document.addEventListener('dragstart', block)
+    return () => {
+      document.removeEventListener('contextmenu', block)
+      document.removeEventListener('dragstart', block)
+    }
+  }, [])
+
   const [version, setVersion] = useState('v2')
   const [currentPage, setCurrentPage] = useState(0)
   const [pageDir, setPageDir] = useState('next')
