@@ -4,7 +4,11 @@ import StatusBar from "./StatusBar";
 import "./V2Home.css";
 
 const CDN = import.meta.env.VITE_CDN_URL;
-const BG = { background: `url(${CDN}/photo0.jpg) center/cover no-repeat` };
+const WALLPAPER_URL = `${CDN}/photo0.jpg`;
+
+function Wallpaper() {
+  return <img src={WALLPAPER_URL} alt="" className="wallpaper-bg" />;
+}
 
 const HOME_APPS = [
   { id: "invite", iconType: "mail", label: "초대장" },
@@ -83,7 +87,6 @@ function LockScreen({ onUnlock, onNotifTap }) {
       ref={screenRef}
       className={`lock-screen ${unlocking ? "unlocking" : ""}`}
       style={{
-        ...BG,
         transform,
         opacity,
         transition:
@@ -96,6 +99,7 @@ function LockScreen({ onUnlock, onNotifTap }) {
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}
     >
+      <Wallpaper />
       <StatusBar />
       <div className="lock-content">
         <div className="lock-date">5월 25일 월요일</div>
@@ -301,11 +305,11 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
   return (
     <div
       className="home-screen"
-      style={BG}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      <Wallpaper />
       <StatusBar />
       <div
         className="home-pages"
@@ -396,7 +400,7 @@ function HomeScreen({ onAppClick, onSwitchV1, onLock }) {
             opacity: Math.min(pullY / 200, 1),
           }}
         >
-          <div className="pull-lock-bg" style={BG} />
+          <div className="pull-lock-bg"><Wallpaper /></div>
         </div>
       )}
     </div>
